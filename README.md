@@ -3,7 +3,6 @@
 ## Descrição
 Para eu não esquecer, o comando para começar o expo é 
 $ npx expo start
-$ npm run android
 
 ## Instalação
 Para executar o aplicativo PlanThech localmente em seu ambiente de desenvolvimento, siga estas etapas:

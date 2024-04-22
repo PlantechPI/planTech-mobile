@@ -9,33 +9,30 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        flexDirection: 'column',
-        justifyContent:'space-between',
-        backgroundColor: '#fff',
-        paddingHorizontal: 20
+        // marginTop:40,
+        justifyContent: 'center',
+        alignItems:'center',
+        resizeMode: 'cover',
+        // opacity: 0.7
     },
-    input: {
-        height: 40,
-        width: '100%',
-        margin: 8,
-        borderWidth: 1,
-        paddingHorizontal: 5
-    },
-    button:{
-        width: '100%',
-        margin: 8
-    },
-    keyboardAvoidingView:{
-        flex:1,
-        flexDirection: 'column',
-        justifyContent:'space-between',
-    },
-    box: {
-        backgroundColor: '#61dafb',
-        width: 80,
-        height: 80,
-        borderRadius: 4,
+      backgroundImage: {
+        // flex: 1,
+        resizeMode: 'cover', // ou 'contain' para ajustar o tamanho da imagem
+        // justifyContent: 'center',
       },
+      parteBaixo:{
+        flex:1,
+        marginBottom:40,
+        justifyContent:'flex-end',
+        width: '80%',
+        gap: 10
+      },
+      parteCima:{
+        marginTop:120
+    },
+    imageLogo:{
+        flex: 1,
+    }
   });
 
   export default styles

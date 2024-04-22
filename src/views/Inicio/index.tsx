@@ -1,12 +1,17 @@
 import React, {useState, useEffect, useContext} from 'react'
-import { View, Image, TextInput, Button, Platform, Alert, KeyboardAvoidingView, Keyboard, SafeAreaView, LayoutAnimation, LayoutAnimationConfig } from 'react-native'
+import { View, Image, TextInput, Button, Platform, Alert, KeyboardAvoidingView, Keyboard, SafeAreaView, LayoutAnimation, LayoutAnimationConfig, ImageBackground } from 'react-native'
 import styles  from './styles'
 import SplashScreen from '../../components/splashScreen/index'
+import ButtonComponent from '../../components/ButtonComponent'
+import { useNavigation } from '@react-navigation/native';
 
 
 const Home = () => {
+    const navigation = useNavigation();
     const [keyBoardIsOpen, setKeyBoardIsOpen] = useState<boolean>();
     const [exibeSplashScreen, setExibeSplashScreen] = useState<boolean>(true)
+    const imageLogo = '../../assets/images/iconePlanThec.png'
+    // const ImageBackground = '../../assets/images/backgroundImage.jpg'
 
     useEffect(()=>{
         exibeTelaInicial()
@@ -18,37 +23,39 @@ const Home = () => {
         }, 2000)
     }
 
-    // const loginContext = useContext(LoginContext)
+    return (
+      exibeSplashScreen ? (
+          <SplashScreen />
+      ) : (
+          // <SafeAreaView style={styles.container}>
+            <ImageBackground
+            source={require('../../assets/images/imagem2.jpg')}
+            opacity={0.9}
+            style={styles.container}
+            >
+              <View style={styles.parteCima}>
+                <View style={styles.imageLogo}>
+                  <Image source={require(imageLogo)} />
+                </View>
+              </View>
+            <View style={styles.parteBaixo}>
+                <ButtonComponent
+                textoBtn='Logar'
+                onPress={() => navigation.navigate('Logar')}
+                />
 
-    const animacaoCostomizada:LayoutAnimationConfig = {
-      duration: 2500,
-      create: {
-        type: LayoutAnimation.Types.spring,
-        property: LayoutAnimation.Properties.scaleXY,
-        springDamping: 0.7
-      }
-    }
-
-    useEffect(() => {
-      // Configurando a animação inicial de layout para spring
-      LayoutAnimation.configureNext(animacaoCostomizada);
-    }, []);
-
-    
-
-  return (
-    exibeSplashScreen ? 
-    (<SplashScreen />) : (
-        <SafeAreaView style={styles.container}>
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.keyboardAvoidingView}>  
-            <Image style={styles.img}source={{uri:'https://cdn-icons-png.flaticon.com/512/25/25231.png'}}/>
-         </KeyboardAvoidingView>
-      </SafeAreaView>
-    )
+                <ButtonComponent
+                textoBtn='Cadastrar'
+                onPress={() => navigation.navigate('Cadastrar')}
+                />
 
 
-  )
+            </View>
+
+            </ImageBackground>
+          // </SafeAreaView>
+      )
+  );
 }
 
 
