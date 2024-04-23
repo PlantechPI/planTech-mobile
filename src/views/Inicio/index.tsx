@@ -30,7 +30,7 @@ const Home = () => {
           // <SafeAreaView style={styles.container}>
             <ImageBackground
             source={require('../../assets/images/imagem2.jpg')}
-            opacity={0.9}
+            // opacity={0.9}
             style={styles.container}
             >
               <View style={styles.parteCima}>
