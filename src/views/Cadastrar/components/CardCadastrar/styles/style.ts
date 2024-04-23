@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
     textoh1:{
         fontFamily: 'Roboto',
         fontSize: 16,
-        fontWeight: 'bold'
-        // color: 'white',
+        fontWeight: 'bold',
+        color: CORES.background,
     },
   });
 

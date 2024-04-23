@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { CORES } from "../../../enum/Cores";
 
 const styles = StyleSheet.create({
     img: {
@@ -32,7 +33,54 @@ const styles = StyleSheet.create({
     },
     imageLogo:{
         flex: 1,
-    }
+    },
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'flex-end',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalView: {
+      backgroundColor: CORES.background,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      paddingVertical: 20,
+      paddingHorizontal: 40,
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: 'center',
+    },
+    closeButton: {
+      textAlign: 'center',
+      color: 'blue',
+      marginTop: 10,
+    },
+    btn:{
+      height: '100%',
+      width: '100%',
+      borderColor: 'black',
+      padding: 10,
+      borderRadius: 5,
+      elevation: 5,
+      backgroundColor: CORES.background,
+      
+  },
+  textoh1:{
+      fontFamily: 'Roboto',
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: '#000',
+      marginHorizontal:5
+  },
+  btnInput:{ 
+    height: 40, 
+    padding:10, 
+    borderRadius:40 ,
+    backgroundColor: CORES.branco,
+    marginBottom: 20,
+    marginTop:2,
+    marginHorizontal:5
+  },
   });
 
   export default styles

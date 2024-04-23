@@ -4,6 +4,7 @@ import { CORES } from '../../../enum/Cores'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:'#fff'
   },
   halfBackground: {
     flex: 0.2, // Metade da tela
@@ -19,10 +20,41 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   card: {
-    height:300,
-    width: '80%',
+    height:340,
+    width: '85%',
     marginTop: 50
-  }
-  });
+  },
+  box: {
+    // flex: 1,
+    width: '100%',
+    height: '100%',
+},
+btn:{
+    height: '100%',
+    width: '100%',
+    borderColor: 'black',
+    padding: 10,
+    borderRadius: 5,
+    elevation: 5,
+    backgroundColor: CORES.background,
+    
+},
+textoh1:{
+    fontFamily: 'Roboto',
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',
+    marginHorizontal:5
+},
+btnInput:{ 
+  height: 40, 
+  padding:10, 
+  borderRadius:40 ,
+  backgroundColor: CORES.branco,
+  marginBottom: 20,
+  marginTop:2,
+  marginHorizontal:5
+},
+});
 
   export default styles
