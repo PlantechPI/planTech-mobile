@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   card: {
-    height:340,
+    height:250,
     width: '85%',
     marginTop: 50
   },

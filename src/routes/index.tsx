@@ -12,8 +12,7 @@ export default function Routes() {
 
     return (
         <NavigationContainer>
-            {auth ? <TabRoutes /> : <StackRoutes />}
-            {/* {true ? <TabRoutes /> : <StackRoutes />} */}
+            <StackRoutes />
         </NavigationContainer>
     );
 }

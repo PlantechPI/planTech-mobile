@@ -2,11 +2,6 @@ import { StyleSheet } from "react-native";
 import { CORES } from '../../../../../enum/Cores'
 
 const styles = StyleSheet.create({
-    container: {
-        // flex: 1,
-        width: '100%',
-        height: '100%',
-    },
     btn:{
         height: '100%',
         width: '100%',
@@ -14,7 +9,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         elevation: 5,
-        backgroundColor: CORES.primaria,
+        backgroundColor: CORES.background,
         
     },
     textoh1:{
@@ -23,6 +18,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: CORES.background,
     },
+    container: {
+        height:250,
+        width: '85%',
+        marginTop: 50
+      },
   });
 
   export default  styles 

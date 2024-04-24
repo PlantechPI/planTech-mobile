@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Image, Modal, TextInput, ImageBackground, TouchableOpacity, Text } from 'react-native';
 import styles from './styles';
 import SplashScreen from '../../components/splashScreen/index';
 import ButtonComponent from '../../components/ButtonComponent';
 import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../../context/auth'
 
 const Home = () => {
+  const { login } = useContext(AuthContext)
   const navigation = useNavigation();
   const [exibeSplashScreen, setExibeSplashScreen] = useState<boolean>(true);
   const [loginModalVisible, setLoginModalVisible] = useState<boolean>(false);
   const [signupModalVisible, setSignupModalVisible] = useState<boolean>(false);
+  const imagens = [require('../../assets/images/imagem2.jpg'), require('../../assets/images/imagem1.jpg'), require('../../assets/images/imagem3.jpg'), require('../../assets/images/imagem4.jpg'), require('../../assets/images/imagem5.jpg'), require('../../assets/images/imagem6.jpg'), require('../../assets/images/imagem7.jpg'), require('../../assets/images/imagem8.jpg')]
+  const [numAleatorio, setNumAleatorio] = useState<number>(0)
 
   const [newNome, setNewNome] = useState('');
   const [newEmail, setNewEmail] = useState('');
@@ -18,8 +22,15 @@ const Home = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
+  const getRandomInt = (min:number, max:number):number => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+
   useEffect(() => {
     exibeTelaInicial();
+    setNumAleatorio(getRandomInt(0,7))
   }, []);
 
   const exibeTelaInicial = () => {
@@ -61,6 +72,7 @@ const Home = () => {
   const logarUsuario = async() =>{
     console.log('Email -', email )
     console.log('Senha -', senha )
+    login(email, senha)
   }
 
   return (
@@ -68,7 +80,7 @@ const Home = () => {
       <SplashScreen />
     ) : (
       <ImageBackground
-        source={require('../../assets/images/imagem2.jpg')}
+        source={imagens[numAleatorio]}
         style={styles.container}
       >
         <View style={styles.parteCima}>

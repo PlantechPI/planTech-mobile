@@ -6,7 +6,7 @@ import ButtonComponent from '../../components/ButtonComponent'
 import { useNavigation } from '@react-navigation/native';
 
 
-const InicialLogado = () => {
+const StatusCultura = () => {
     const navigation = useNavigation();
     return (
           <View style={styles.container}>
@@ -15,4 +15,4 @@ const InicialLogado = () => {
 
     )
 }
-export default InicialLogado;
+export default StatusCultura;

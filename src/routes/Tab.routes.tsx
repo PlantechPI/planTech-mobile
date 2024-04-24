@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign, FontAwesome, MaterialIcons, FontAwesome6, Ionicons } from '@expo/vector-icons'
 import { CORES } from "../enum/Cores";
 import { Animated, Text } from 'react-native'; // Importando Animated e Text
-import InicialLogado from '../views/InicialLogado'
+import StatusCultura from '../views/StatusCultura'
 import Historico from "../views/Historico/listar";
 import Configuracoes from "../views/Configuracoes";
 
@@ -31,8 +31,8 @@ export default function TabRoutes(){
             })}
         >
             <Tab.Screen
-                name="InicialLogado"
-                component={InicialLogado}
+                name="StatusCultura"
+                component={StatusCultura}
                 initialParams={{ title: 'Status Cultura' }} // Definindo os parâmetros iniciais para esta rota
                 options={{
                     tabBarActiveTintColor: 'black',

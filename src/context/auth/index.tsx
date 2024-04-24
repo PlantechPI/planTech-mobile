@@ -14,13 +14,16 @@ type AuthContextType = {
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [auth, setAuth] = useState<boolean>(true);
+  const [auth, setAuth] = useState<boolean>(false);
   const [id_Usuario, setIdUsuario] = useState<string>('');
   const [user, setUser] = useState<any>({});
   const api = axios.create({baseURL:' http://35.247.220.172'});
 
-  const login = async() =>{
+  const login = async(email:string, senha:string) =>{
+    console.log( 'email - ', email)
+    console.log( 'senha - ', senha)
     // api.get()
+    setAuth(true)
   }
 
   const logout = async() =>{
