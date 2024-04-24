@@ -6,13 +6,13 @@ import ButtonComponent from '../../components/ButtonComponent'
 import { useNavigation } from '@react-navigation/native';
 
 
-const Logar = () => {
+const InicialLogado = () => {
     const navigation = useNavigation();
     return (
           <View>
-            <Text> Logar</Text>
+            <Text> Inicial Logado</Text>
           </View>
 
     )
 }
-export default Logar
+export default InicialLogado;

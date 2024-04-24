@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from '../views/Inicio'
-import Logar from '../views/Logar'
+import Logar from '../views/InicialLogado'
 import Cadastrar from '../views/Cadastrar'
 
 export default function StackRoutes() {
@@ -10,8 +10,6 @@ export default function StackRoutes() {
   return (
         <Stack.Navigator>
             <Stack.Screen name="Home" component={Home} options={{headerShown:false}}/>
-            <Stack.Screen name="Logar" component={Logar} options={{headerShown:true}}/>
-            <Stack.Screen name="Cadastrar" component={Cadastrar} options={{headerShown:true}}/>
         </Stack.Navigator>
   );
 }

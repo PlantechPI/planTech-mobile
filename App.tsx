@@ -1,6 +1,11 @@
-import Router from './src/routes/index'
+
+import Router from './src/routes/index';
+import { AuthProvider } from './src/context/auth'; 
+
 export default function App() {
   return (
-    <Router/>
+    <AuthProvider> 
+      <Router/>
+    </AuthProvider>
   );
 }

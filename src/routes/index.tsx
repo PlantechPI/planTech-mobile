@@ -1,13 +1,18 @@
 import { NavigationContainer } from '@react-navigation/native';
-import StackRoutes from './Stack.routes'
+import StackRoutes from './Stack.routes';
+import TabRoutes from './Tab.routes';
+import { useContext } from 'react';
+import { AuthContext } from '../context/auth'; // Importe o contexto AuthContext corretamente
 
-export default function Routes(){
-    // const loginContext = useContext(LoginContext)
+export default function Routes() {
+    const authContext = useContext(AuthContext); // Use o hook useContext para acessar o contexto AuthContext
 
-    return(
+    // Verifique se AuthContext não é undefined antes de acessar a propriedade auth
+    const auth = authContext ? authContext.auth : false;
+
+    return (
         <NavigationContainer>
-            {/* {loginContext.auth ? <TabRoutes />: <StackRoutes /> } */}
-            <StackRoutes/>
+            {auth ? <TabRoutes /> : <StackRoutes />}
         </NavigationContainer>
-    )
+    );
 }
