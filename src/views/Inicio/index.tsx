@@ -18,9 +18,6 @@ const Home = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-
-  
-
   useEffect(() => {
     exibeTelaInicial();
   }, []);

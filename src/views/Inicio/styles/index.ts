@@ -70,11 +70,11 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
       color: '#000',
-      marginHorizontal:5
+      marginHorizontal:10
   },
   btnInput:{ 
-    height: 40, 
-    padding:10, 
+    height: 50, 
+    paddingHorizontal:20, 
     borderRadius:40 ,
     backgroundColor: CORES.branco,
     marginBottom: 20,

@@ -1,18 +1,18 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { View, Image, TextInput, Button, Platform, Alert, KeyboardAvoidingView, Keyboard, SafeAreaView, LayoutAnimation, LayoutAnimationConfig, ImageBackground, Text } from 'react-native'
 import styles  from './styles'
-import SplashScreen from '../../components/splashScreen/index'
-import ButtonComponent from '../../components/ButtonComponent'
+import SplashScreen from '../../../components/splashScreen/index'
+import ButtonComponent from '../../../components/ButtonComponent'
 import { useNavigation } from '@react-navigation/native';
 
 
-const InicialLogado = () => {
+const Historico = () => {
     const navigation = useNavigation();
     return (
           <View style={styles.container}>
-            <Text> Inicial Logado</Text>
+            <Text> Historico </Text>
           </View>
 
     )
 }
-export default InicialLogado;
+export default Historico;
