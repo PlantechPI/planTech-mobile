@@ -16,7 +16,16 @@ const CardCadastrar:React.FC<ICardCadastrar> = ({ nomeCultura, nomeTipoCultura, 
   
   return (//Mostrar no card o nome, tipo da cultura, onde ela está situada e procurar mais alguma coisa para exibir, procurar um icone para cada
   <TouchableOpacity style={styles.container}>
+
       <View style={[styles.btn]}> 
+        <View style={styles.centro}>
+          <Text style={styles.titulo}>{nomeCultura}</Text>
+          </View>
+      
+    <Text> 
+    <FontAwesome6 name="plant-wilt" size={24} color='#000'/>
+      {nomeTipoCultura}
+    </Text>
 
 
       </View>

@@ -14,29 +14,35 @@ import { AuthContext } from '../../context/auth'
 
 
 const ListarCulturas = () => {
-  const { listarCulturas } = useContext(AuthContext)
+  const { listarCulturas } = useContext(AuthContext);
 
-    const navigation = useNavigation();
-    const [nome, setNome] = useState<string>();
-    const [email, setEmail] = useState<string>();
-    const [senha, setSenha]= useState<string>();
-    const funcao = FuncaoNoSistema.agricultor
-    listarCulturas()
+  const navigation = useNavigation();
+  const [culturas, setCulturas] = useState([]);
+
+  useEffect(() => {
+    const retornaCulturas = async () => {
+      const listaCulturas = await listarCulturas();
+      setCulturas(listaCulturas);
+    };
+    retornaCulturas();
+  }, []);
 
 
     return (
       <View style={styles.container}>
-        {/* Metade inferior com a cor de fundo */}
-        <View style={styles.halfBackground} />
-        
-        {/* Conteúdo que fica por cima do fundo */}
-        <View style={styles.contentContainer}>
+      {/* Metade inferior com a cor de fundo */}
+      <View style={styles.halfBackground} />
+      <View style={styles.contentContainer}>
+        {culturas.map((element: any, index: number) => (
           <CardCultura
-          nomeCultura='Cultura do zé'
-          nomeTipoCultura='UVA'
-          local='Vitória, espirito santo'/>
-        </View>
+            key={index} // Adicione uma chave única para cada componente na iteração
+            nomeCultura={`Cultura ${index+1}`}
+            nomeTipoCultura={element.nomeCultura}
+            local='Vitória, Espírito Santo'
+          />
+        ))}
       </View>
+    </View>
     );
 }
 export default ListarCulturas

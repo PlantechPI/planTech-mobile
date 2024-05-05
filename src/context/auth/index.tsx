@@ -20,6 +20,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [auth, setAuth] = useState<boolean>(false);
   const [id_Usuario, setIdUsuario] = useState<string>('');
   const [user, setUser] = useState<any>({});
+  const [culturaSelecionada, setCulturaSelecionada] = useState({})
+
   const api = axios.create({ baseURL: 'http://34.151.221.155' });
 
   const cadastrar = async (nome: string, email: string, senha: string) => {
@@ -49,12 +51,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const listarCulturas = async() =>{
     try {
       const payload = { user_id: id_Usuario};
-    console.log('payload',payload)
 
-      const response = await api.post('/listCulturas', payload);
+      const response = await api.get('/listCulturas', payload);
       console.log('Resposta do listarCulturas:', response.data);
       setAuth(true);
-      return true;
+      return response.data;
     } catch (error) {
       console.log('erro', error)
       return false;

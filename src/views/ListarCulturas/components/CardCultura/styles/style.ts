@@ -19,10 +19,17 @@ const styles = StyleSheet.create({
         color: CORES.background,
     },
     container: {
-        height:250,
+        height:150,
         width: '85%',
-        marginTop: 50
+        marginTop: 50,
       },
+      centro:{
+        alignItems: 'center',
+        justifyContent:'center'
+      },
+      titulo:{
+        fontWeight:'bold'
+      }
   });
 
   export default  styles 
