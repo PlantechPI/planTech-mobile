@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Image, Modal, TextInput, ImageBackground, TouchableOpacity, Text } from 'react-native';
+import { View, Image, Modal, TextInput, ImageBackground, TouchableOpacity, Text, Alert } from 'react-native';
 import styles from './styles';
 import SplashScreen from '../../components/splashScreen/index';
 import ButtonComponent from '../../components/ButtonComponent';
@@ -64,11 +64,29 @@ const Home = () => {
   };
 
   const cadastrarUsuario = async() =>{
-    cadastrar(newNome, newEmail, newSenha)
+    const res = await cadastrar(newNome, newEmail, newSenha)
+    limparCadastro()
+  }
+
+  const limparLogin = () =>{
+    setEmail('')
+    setSenha('')
+  }
+
+  const limparCadastro = () =>{
+    setNewEmail('')
+    setNewNome('')
+    setNewSenha('')
   }
 
   const logarUsuario = async() =>{
-    login(email, senha)
+    const resLogin = await login(email, senha)
+    
+    if(!resLogin){
+      limparLogin()
+      closeLoginModal()
+      Alert.alert('Ops', 'As credenciais são inválidas')
+    }
   }
 
   return (

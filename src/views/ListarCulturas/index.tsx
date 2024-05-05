@@ -7,20 +7,21 @@ import { useNavigation } from '@react-navigation/native';
 import { FuncaoNoSistema } from '../../enum/FuncaoNoSistema'
 import CardCultura from './components/CardCultura'
 import { CORES } from '../../enum/Cores'
+import { AuthContext } from '../../context/auth'
+
 
 
 
 
 const ListarCulturas = () => {
+  const { listarCulturas } = useContext(AuthContext)
+
     const navigation = useNavigation();
     const [nome, setNome] = useState<string>();
     const [email, setEmail] = useState<string>();
     const [senha, setSenha]= useState<string>();
     const funcao = FuncaoNoSistema.agricultor
-
-    const hundleCadastrar = () =>{
-      console.log('nome', nome, 'email', email, 'senha', senha)
-    }
+    listarCulturas()
 
 
     return (
