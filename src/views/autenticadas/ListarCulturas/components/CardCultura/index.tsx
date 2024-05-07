@@ -7,26 +7,26 @@ import { AuthContext } from '../../../../../context/auth'
 import { useNavigation } from '@react-navigation/native';
 
 
-
 interface ICardCadastrar{
   nomeCultura?: string,
   nomeTipoCultura?: string,
   local?: string,
+  id_cultura_atual?:string
 }
 
-const CardCadastrar:React.FC<ICardCadastrar> = ({ nomeCultura, nomeTipoCultura, local }) => {
+const CardCadastrar:React.FC<ICardCadastrar> = ({ nomeCultura, nomeTipoCultura, local, id_cultura_atual }) => {
   const navigation = useNavigation();
+  const { id_cultura, setIdCultura} = useContext(AuthContext); 
 
-  const navegarParaListarCulturas = () => {
-    console.log('cheguei')
-    navigation.navigate('Historico');
+  const mudaIdCultura = () => {
+    setIdCultura(id_cultura_atual)
   };
   
   return (//Mostrar no card o nome, tipo da cultura, onde ela está situada e procurar mais alguma coisa para exibir, procurar um icone para cada
 
   <TouchableOpacity 
   style={styles.container}
-  onPress={ navegarParaListarCulturas}>
+  onPress={ mudaIdCultura}>
 
       <View style={[styles.btn]}> 
         <View style={styles.centro}>

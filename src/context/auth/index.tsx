@@ -11,7 +11,9 @@ type AuthContextType = {
   login: (email: string, senha: string) => Promise<boolean>;
   logout: () => void;
   user: any;
-  listarCulturas: ()=> Promise<any>
+  listarCulturas: ()=> Promise<any>;
+  id_cultura: string;
+  setIdCultura: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -21,6 +23,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [id_Usuario, setIdUsuario] = useState<string>('');
   const [user, setUser] = useState<any>({});
   const [culturaSelecionada, setCulturaSelecionada] = useState({})
+  const [id_cultura, setIdCultura] = useState('')
 
   const api = axios.create({ baseURL: 'http://34.151.221.155' });
 
@@ -73,7 +76,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, id_Usuario, setIdUsuario, cadastrar, login, logout, user, listarCulturas }}>
+    <AuthContext.Provider value={{ auth, setAuth, id_Usuario, setIdUsuario, cadastrar, login, logout, user, listarCulturas, id_cultura, setIdCultura }}>
       {children}
     </AuthContext.Provider>
   );

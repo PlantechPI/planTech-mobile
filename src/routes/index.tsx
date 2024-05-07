@@ -5,14 +5,15 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/auth'; // Importe o contexto AuthContext corretamente
 
 export default function Routes() {
-    const authContext = useContext(AuthContext); // Use o hook useContext para acessar o contexto AuthContext
+    const { id_cultura, setIdCultura} = useContext(AuthContext);  
 
     // Verifique se AuthContext não é undefined antes de acessar a propriedade auth
-    const auth = authContext ? authContext.auth : false;
+    // const auth = authContext ? authContext.auth : false;
 
     return (
         <NavigationContainer>
-            <StackRoutes />
+            {id_cultura == '' ? <StackRoutes /> : <TabRoutes />}
+            {/* <TabRoutes /> */}
         </NavigationContainer>
     );
 }

@@ -14,7 +14,7 @@ import { AuthContext } from '../../../context/auth'
 
 
 const ListarCulturas = () => {
-  const { listarCulturas } = useContext(AuthContext);
+  const { id_cultura, setIdCultura, listarCulturas } = useContext(AuthContext);
 
   const navigation = useNavigation();
   const [culturas, setCulturas] = useState([]);
@@ -22,6 +22,7 @@ const ListarCulturas = () => {
   useEffect(() => {
     const retornaCulturas = async () => {
       const listaCulturas = await listarCulturas();
+      console.log(listaCulturas)
       setCulturas(listaCulturas);
     };
     retornaCulturas();
@@ -39,6 +40,7 @@ const ListarCulturas = () => {
             nomeCultura={`Cultura ${index+1}`}
             nomeTipoCultura={element.nomeCultura}
             local='Vitória, Espírito Santo'
+            id_cultura_atual={element.id_culutra}
           />
         ))}
       </View>
