@@ -19,7 +19,7 @@ $ cd PlanThech
 npm install
 
 5. Execute o projeto usando Expo:
-npm start
+$ npx expo start
 
 6. Abra o aplicativo Expo Go em seu dispositivo móvel e escaneie o código QR fornecido no terminal para visualizar o aplicativo PlanThech em seu dispositivo.
 

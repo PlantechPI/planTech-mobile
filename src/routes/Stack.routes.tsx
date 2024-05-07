@@ -1,8 +1,8 @@
 import * as React from 'react'; // Importa a biblioteca React de forma explícita
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from '../views/Inicio'
-import Configuracoes from '../views/Configuracoes'
-import ListarCulturas from '../views/ListarCulturas'
+import Home from '../views/desautenticadas/Inicio'
+import Configuracoes from '../views/autenticadas/Configuracoes'
+import ListarCulturas from '../views/autenticadas/ListarCulturas'
 import { useContext } from "react";
 import { AuthContext } from '../context/auth'
 

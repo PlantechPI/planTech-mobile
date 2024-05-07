@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { CORES } from '../../../../../enum/Cores'
+import { CORES } from '../../../../../../enum/Cores'
 
 const styles = StyleSheet.create({
     btn:{

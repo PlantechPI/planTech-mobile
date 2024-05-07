@@ -1,13 +1,13 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { View, Image, TextInput, Button, Platform, Alert, KeyboardAvoidingView, Keyboard, SafeAreaView, LayoutAnimation, LayoutAnimationConfig, ImageBackground, Text } from 'react-native'
 import styles  from './styles'
-import SplashScreen from '../../components/splashScreen/index'
-import ButtonComponent from '../../components/ButtonComponent'
+import SplashScreen from '../../../components/splashScreen/index'
+import ButtonComponent from '../../../components/ButtonComponent'
 import { useNavigation } from '@react-navigation/native';
-import { FuncaoNoSistema } from '../../enum/FuncaoNoSistema'
+import { FuncaoNoSistema } from '../../../enum/FuncaoNoSistema'
 import CardCultura from './components/CardCultura'
-import { CORES } from '../../enum/Cores'
-import { AuthContext } from '../../context/auth'
+import { CORES } from '../../../enum/Cores'
+import { AuthContext } from '../../../context/auth'
 
 
 

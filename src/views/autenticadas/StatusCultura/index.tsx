@@ -6,13 +6,13 @@ import ButtonComponent from '../../../components/ButtonComponent'
 import { useNavigation } from '@react-navigation/native';
 
 
-const Historico = () => {
+const StatusCultura = () => {
     const navigation = useNavigation();
     return (
           <View style={styles.container}>
-            <Text> Historico </Text>
+            <Text> Inicial Logado</Text>
           </View>
 
     )
 }
-export default Historico;
+export default StatusCultura;

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Image, Modal, TextInput, ImageBackground, TouchableOpacity, Text, Alert } from 'react-native';
 import styles from './styles';
-import SplashScreen from '../../components/splashScreen/index';
-import ButtonComponent from '../../components/ButtonComponent';
+import SplashScreen from '../../../components/splashScreen/index';
+import ButtonComponent from '../../../components/ButtonComponent';
 import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../../context/auth'
+import { AuthContext } from '../../../context/auth'
 
 const Home = () => {
   const { cadastrar, login } = useContext(AuthContext)
@@ -12,7 +12,7 @@ const Home = () => {
   const [exibeSplashScreen, setExibeSplashScreen] = useState<boolean>(true);
   const [loginModalVisible, setLoginModalVisible] = useState<boolean>(false);
   const [signupModalVisible, setSignupModalVisible] = useState<boolean>(false);
-  const imagens = [require('../../assets/images/imagem2.jpg'), require('../../assets/images/imagem1.jpg'), require('../../assets/images/imagem3.jpg'), require('../../assets/images/imagem4.jpg'), require('../../assets/images/imagem5.jpg'), require('../../assets/images/imagem6.jpg'), require('../../assets/images/imagem7.jpg'), require('../../assets/images/imagem8.jpg')]
+  const imagens = [require('../../../assets/images/imagem2.jpg'), require('../../../assets/images/imagem1.jpg'), require('../../../assets/images/imagem3.jpg'), require('../../../assets/images/imagem4.jpg'), require('../../../assets/images/imagem5.jpg'), require('../../../assets/images/imagem6.jpg'), require('../../../assets/images/imagem7.jpg'), require('../../../assets/images/imagem8.jpg')]
   const [numAleatorio, setNumAleatorio] = useState<number>(0)
 
   const [newNome, setNewNome] = useState('');
@@ -99,7 +99,7 @@ const Home = () => {
       >
         <View style={styles.parteCima}>
           <View style={styles.imageLogo}>
-            <Image source={require('../../assets/images/iconePlanThec.png')} />
+            <Image source={require('../../../assets/images/iconePlanThec.png')} />
           </View>
         </View>
         <View style={styles.parteBaixo}>
