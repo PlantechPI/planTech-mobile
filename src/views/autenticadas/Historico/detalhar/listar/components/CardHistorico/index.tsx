@@ -10,7 +10,7 @@ interface ICardHistorico{
 const CardHistorico:React.FC<ICardHistorico> = ({data}) => {
     const navigation = useNavigation();
     const detalharHistorico = () =>{
-        navigation.navigate('HistoricoDetalhado')
+        navigation.navigate('ListarCulturas')
     }
     return (
         <TouchableOpacity onPress={detalharHistorico}>

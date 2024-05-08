@@ -4,13 +4,21 @@ import styles  from './styles'
 import SplashScreen from '../../../../components/splashScreen'
 import ButtonComponent from '../../../../components/ButtonComponent'
 import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../../../../context/auth'
+import CardHistorico from './components/CardHistorico/index'
 
-
-const Historico = () => {
+const Historico:React.FC = () => {
+  const { listarInformacoesDiarias } = useContext(AuthContext)
+  listarInformacoesDiarias()
     const navigation = useNavigation();
     return (
           <View style={styles.container}>
-            <Text> Historico </Text>
+              <View style={styles.conteudo}>
+                <CardHistorico data={'12/10/2024'}/>
+                <CardHistorico data={'13/10/2024'}/>
+                <CardHistorico data={'14/10/2024'}/>
+
+              </View>
           </View>
 
     )

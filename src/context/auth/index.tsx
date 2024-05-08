@@ -14,6 +14,7 @@ type AuthContextType = {
   listarCulturas: ()=> Promise<any>;
   id_cultura: string;
   setIdCultura: React.Dispatch<React.SetStateAction<string>>;
+  listarInformacoesDiarias: any;
 };
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -24,6 +25,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<any>({});
   const [culturaSelecionada, setCulturaSelecionada] = useState({})
   const [id_cultura, setIdCultura] = useState('')
+  const [idCoordenada, setIdCoordenada] = useState(1)
 
   const api = axios.create({ baseURL: 'http://34.151.221.155' });
 
@@ -65,6 +67,35 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+  const listarInformacoesDiarias = async() =>{
+    try {
+      const currentDate = new Date();
+      const year = currentDate.getFullYear();
+      const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+      const day = currentDate.getDate().toString().padStart(2, '0');
+
+      const data_atual = `${year}-${month}-${day}`;
+      const data_antiga = '2024-01-01';
+
+      console.log('id_cultura', id_cultura)
+      console.log('idCoordenada', idCoordenada)
+      console.log('current_date', '2024-05-01')
+      console.log('end_date', data_antiga)
+
+
+      const payload = { id_cultura: id_cultura, idCoordenada: idCoordenada, current_date:'2024-04-01', end_date:  '2024-05-01'};
+
+      const response = await api.get('/dados', payload);
+      console.log('Resposta do listarCulturas:', response.data);
+      // setAuth(true);
+      // return response.data;
+    } catch (error) {
+      console.log('erro', error)
+      return false;
+    }
+  };
+  
+
   
 
   
@@ -76,7 +107,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, id_Usuario, setIdUsuario, cadastrar, login, logout, user, listarCulturas, id_cultura, setIdCultura }}>
+    <AuthContext.Provider value={{ auth, setAuth, id_Usuario, setIdUsuario, cadastrar, login, logout, user, listarCulturas, id_cultura, setIdCultura, listarInformacoesDiarias }}>
       {children}
     </AuthContext.Provider>
   );

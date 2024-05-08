@@ -20,6 +20,7 @@ const CardCadastrar:React.FC<ICardCadastrar> = ({ nomeCultura, nomeTipoCultura, 
 
   const mudaIdCultura = () => {
     setIdCultura(id_cultura_atual)
+    console.log('estou setando o valor do idCultura para: ', id_cultura_atual)
   };
   
   return (//Mostrar no card o nome, tipo da cultura, onde ela está situada e procurar mais alguma coisa para exibir, procurar um icone para cada

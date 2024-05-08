@@ -6,8 +6,20 @@ import { Animated, Text } from 'react-native'; // Importando Animated e Text
 import StatusCultura from '../views/autenticadas/StatusCultura'
 import Historico from "../views/autenticadas/Historico/listar";
 import Configuracoes from "../views/autenticadas/Configuracoes";
+import HistoricoDetalhado from '../views/autenticadas/Historico/detalhar/listar';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Tab = createBottomTabNavigator();
+const HistoricoStack = createNativeStackNavigator();
+
+const HistoricoScreens = () =>{
+    return(
+        <HistoricoStack.Navigator>
+            <HistoricoStack.Screen name="Historico listado" component={Historico} options={{ headerShown: false }}/>
+            <HistoricoStack.Screen name="HistoricoDetalhado" component={HistoricoDetalhado} />
+        </HistoricoStack.Navigator>
+    )
+}
 
 export default function TabRoutes(){
     return(
@@ -45,7 +57,7 @@ export default function TabRoutes(){
             />
             <Tab.Screen
                 name="Historico"
-                component={Historico}
+                component={HistoricoScreens}
                 initialParams={{ title: 'Histórico' }} // Definindo os parâmetros iniciais para esta rota
                 options={{
                     tabBarActiveTintColor: 'black',

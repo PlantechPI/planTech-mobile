@@ -40,7 +40,7 @@ const ListarCulturas = () => {
             nomeCultura={`Cultura ${index+1}`}
             nomeTipoCultura={element.nomeCultura}
             local='Vitória, Espírito Santo'
-            id_cultura_atual={element.id_culutra}
+            id_cultura_atual={element.idCultura}
           />
         ))}
       </View>
