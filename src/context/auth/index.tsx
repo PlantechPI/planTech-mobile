@@ -83,9 +83,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       console.log('end_date', data_antiga)
 
 
-      const payload = { id_cultura: id_cultura, idCoordenada: idCoordenada, current_date:'2024-04-01', end_date:  '2024-05-01'};
 
-      const response = await api.get('/dados', payload);
+      const url = `/dados/${id_cultura}/${idCoordenada}/${data_antiga}/${data_atual}`;
+
+      const response = await api.get(url);
       console.log('Resposta do listarCulturas:', response.data);
       // setAuth(true);
       // return response.data;
