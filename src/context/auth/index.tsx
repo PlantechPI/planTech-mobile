@@ -75,7 +75,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const day = currentDate.getDate().toString().padStart(2, '0');
 
       const data_atual = `${year}-${month}-${day}`;
-      const data_antiga = '2024-01-01';
+      const data_antiga = '2024-05-07';
 
       console.log('id_cultura', id_cultura)
       console.log('idCoordenada', idCoordenada)
@@ -84,10 +84,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
 
 
-      const url = `/dados/${id_cultura}/${idCoordenada}/${data_antiga}/${data_atual}`;
+      const url = `/dados/${id_cultura}/${idCoordenada}/${data_atual}/${data_atual}`;
 
       const response = await api.get(url);
-      console.log('Resposta do listarCulturas:', response.data);
+      console.log('Resposta do listarCulturas:', JSON.stringify(response.data));
       // setAuth(true);
       // return response.data;
     } catch (error) {

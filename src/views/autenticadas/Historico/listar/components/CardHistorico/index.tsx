@@ -13,11 +13,11 @@ const CardHistorico:React.FC<ICardHistorico> = ({data}) => {
         navigation.navigate('HistoricoDetalhado')
     }
     return (
-        <TouchableOpacity onPress={detalharHistorico}>
+        // <TouchableOpacity onPress={detalharHistorico}>
           <View style={styles.container}>
             <Text>{data}</Text>
           </View>
-        </TouchableOpacity>
+        // </TouchableOpacity>
 
     )
 }

@@ -6,7 +6,7 @@ import { Animated, Text } from 'react-native'; // Importando Animated e Text
 import StatusCultura from '../views/autenticadas/StatusCultura'
 import Historico from "../views/autenticadas/Historico/listar";
 import Configuracoes from "../views/autenticadas/Configuracoes";
-import HistoricoDetalhado from '../views/autenticadas/Historico/detalhar/listar';
+import HistoricoDetalhado from '../views/autenticadas/Historico/detalhar';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Tab = createBottomTabNavigator();
