@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 10,
     flexWrap:'wrap',
-    justifyContent:'center'
+    // justifyContent:'center'
   }
   });
 
