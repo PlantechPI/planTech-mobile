@@ -4,15 +4,18 @@ import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import { useRoute } from '@react-navigation/native';
 import AuthContext from '../../../../context/auth';
+import { MaterialIcons } from '@expo/vector-icons';
+import NotFound from '../../../../components/NotFound'
 
 
 const HistoricoDetalhado: React.FC<{}> = ({}) => {
-    const { listarInformacoesDiarias } = useContext(AuthContext)
+    const { listarInformacoesDiarias, evapoDoDia } = useContext(AuthContext)
     const route = useRoute();
     const navigation = useNavigation();
 
     const [logs, setLogs] = useState<[]>();
     const [loading, setLoading] = useState(true);
+    const [existeDado, setExisteDado] = useState(true)
 
     const [mediaFosforo, setMediaFosforo] = useState<number>(0)
     const [mediaNitrogenio, setMediaNitrogenio] = useState<number>(0)
@@ -23,14 +26,24 @@ const HistoricoDetalhado: React.FC<{}> = ({}) => {
     const [precipitacaoTotal, setPrecipitacaoTotal] = useState<number>(0)
     const [tempMax, setTempMax] = useState<number>(0)
     const [tempMin, setTempMin] = useState<number>(0)
+    const [evapo, setEvapo] = useState<number>(0)
 
 
     const data = route.params?.data;
 
     const recuperarInfos = async() =>{
         const res = await listarInformacoesDiarias(data)
-        setLogs(res)
-        setLoading(false); // Defina loading como falso após a obtenção dos dados
+        const evapoDodia = await evapoDoDia(data)
+        setEvapo(evapoDodia.ETO)
+        console.log('evapo', evapo.ETO)
+        if(res.length !== 0){
+            setLogs(res)
+            setLoading(false); 
+        }else{
+            setExisteDado(false)
+            console.log('Exibir a página not found')
+        }
+// Defina loading como falso após a obtenção dos dados
     }
 
     useEffect(() =>{
@@ -63,18 +76,11 @@ const HistoricoDetalhado: React.FC<{}> = ({}) => {
                     temperaturaMin = item.tempMin
                 }
             })
-            // console.log('Tamanho logs', logs.length)
-            // console.log('totalFosforo', (totalFosforo/logs.length).toFixed(2))
-            // console.log('totalNitrogenio', (totalNitrogenio/logs.length).toFixed(2))
-            // console.log('totalPotassio', (totalPotassio/logs.length).toFixed(2))
-            // console.log('totalTempSolo', (totalFosforo/logs.length/2).toFixed(2))
-            // console.log('temperaturaMax', (temperaturaMax).toFixed(2))
-            // console.log('temperaturaMin', (temperaturaMin).toFixed(2))
 
             setMediaFosforo(Number((totalFosforo/logs.length).toFixed(2)))
             setMediaNitrogenio(Number((totalNitrogenio/logs.length).toFixed(2)))
             setMediaPotassio(Number((totalPotassio/logs.length).toFixed(2)))
-            // setMediaTempSolo(Number((totalFosforo/logs.length/2).toFixed(2)))
+            setMediaTempSolo(Number((totalFosforo/logs.length/2).toFixed(2)))
             setMediaUmidadeAr(Number((totalUmidadeAr/logs.length).toFixed(2)))
             setMediaUmidadeSolo(Number((totalUmidadeSolo/logs.length).toFixed(2)))
             setPrecipitacaoTotal(Number(totalPrecipitacaoTotal.toFixed(2)))
@@ -84,12 +90,19 @@ const HistoricoDetalhado: React.FC<{}> = ({}) => {
         }
     }, [logs])
 
+    const extrairHorasMinutos = (horario:string) => {
+        const [horas, minutos] = horario.split(':');
+        return `${horas}:${minutos}`;
+      }
+
     return (
-        <ScrollView style={styles.container}>
+        <>
+        {existeDado ? (
+            <ScrollView style={styles.container}>
             
             {loading ? (
                 <View style={styles.loadingContainer}>
-                    <ActivityIndicator size="large" color="green" />
+                    <ActivityIndicator size={40} color="green" />
                 </View>
                 
             ) : (
@@ -102,11 +115,18 @@ const HistoricoDetalhado: React.FC<{}> = ({}) => {
                 </View>
 
                 <View>
+                <View style={styles.tituloMedia}>
+                                <MaterialIcons name="percent" size={24} color='#000' />
+                                <Text style={styles.titulo}> MÉDIAS DIÁRIAS</Text>
+                            </View>
+
+                    <Text> Evapotranspiração do dia: {evapo}</Text>
                     <Text> Media fósforo: {mediaFosforo}</Text>
                     <Text> Media Nitrogenio: {mediaNitrogenio}</Text>
                     <Text> Media Potassio: {mediaPotassio}</Text>
                     <Text> Media umidade do ar: {mediaUmidadeAr}</Text>
                     <Text> Media umidade do solo: {mediaUmidadeSolo}</Text>
+                    <Text> Media temperatura do solo: {mediaTempSolo}</Text>
                     <Text> Precipitação do dia: {precipitacaoTotal}</Text>
                     <Text> Temperatura maxima: {tempMax}</Text>
                     <Text> Temperatura minima: {tempMin}</Text>
@@ -117,7 +137,7 @@ const HistoricoDetalhado: React.FC<{}> = ({}) => {
 
                     {logs && logs.map((item, index) => (
                         <View key={index} style={styles.logs}>
-                            <Text style={{fontWeight: 'bold'}}> {item.horaDado}</Text>
+                            <Text style={{fontWeight: 'bold'}}> {extrairHorasMinutos(item.horaDado)}</Text>
 
                             <Text>Temperatura do solo: {item.tempSolo} </Text>
                             <Text>Fosforo no Solo: {item.fosforoSolo}</Text>
@@ -131,8 +151,15 @@ const HistoricoDetalhado: React.FC<{}> = ({}) => {
                 </View>
             )}
         </ScrollView>
+        ) : (
+            <NotFound />
+        )}
+        
+        
+        </>
     );
 };
+
 
 
 export default HistoricoDetalhado;

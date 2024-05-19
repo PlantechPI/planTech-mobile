@@ -15,6 +15,7 @@ type AuthContextType = {
   id_cultura: string;
   setIdCultura: React.Dispatch<React.SetStateAction<string>>;
   listarInformacoesDiarias: any;
+  evapoDoDia: any;
 };
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -83,6 +84,25 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return false;
     }
   };
+
+  
+  const evapoDoDia = async(dataString:string) =>{
+    try {
+      const [dia, mes, ano] = dataString.split('/');
+      const data_atual = `${ano}-${mes}-${dia}`;
+
+      const url = `/evapo/${data_atual}/${id_cultura}`;
+
+      const response = await api.get(url);
+
+      return response.data
+
+    } catch (error) {
+      console.log('erro', error)
+      return false;
+    }
+  };
+  
   
 
   
@@ -96,7 +116,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, id_Usuario, setIdUsuario, cadastrar, login, logout, user, listarCulturas, id_cultura, setIdCultura, listarInformacoesDiarias }}>
+    <AuthContext.Provider value={{ auth, setAuth, id_Usuario, setIdUsuario, cadastrar, login, logout, user, listarCulturas, id_cultura, setIdCultura, listarInformacoesDiarias, evapoDoDia }}>
       {children}
     </AuthContext.Provider>
   );
