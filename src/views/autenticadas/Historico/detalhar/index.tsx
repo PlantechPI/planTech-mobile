@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import { useRoute } from '@react-navigation/native';
@@ -86,28 +86,49 @@ const HistoricoDetalhado: React.FC<{}> = ({}) => {
 
     return (
         <ScrollView style={styles.container}>
-            <Text> Histórico detalhado do dia {data} </Text>
+            
             {loading ? (
-                <Text>Carregando...</Text> 
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color="green" />
+                </View>
                 
             ) : (
-                <>
-                <Text> Media fósforo: {mediaFosforo}</Text>
-                <Text> media Nitrogenio: {mediaNitrogenio}</Text>
-                <Text> Media Potassio: {mediaPotassio}</Text>
-                <Text> Media umidade do ar: {mediaUmidadeAr}</Text>
-                <Text> Media umidade do solo: {mediaUmidadeSolo}</Text>
-                <Text> Precipitação do dia: {precipitacaoTotal}</Text>
+                <View style={styles.centro}>
 
-                <Text> Temperatura maxima: {tempMax}</Text>
-                <Text> Temperatura minima: {tempMin}</Text>
+
+             <View style={styles.cardPrinpipal}>
+                <View style={{height: '100%'}}>
+                    <View style={styles.lateralColorida}/>
+                </View>
+
+                <View>
+                    <Text> Media fósforo: {mediaFosforo}</Text>
+                    <Text> Media Nitrogenio: {mediaNitrogenio}</Text>
+                    <Text> Media Potassio: {mediaPotassio}</Text>
+                    <Text> Media umidade do ar: {mediaUmidadeAr}</Text>
+                    <Text> Media umidade do solo: {mediaUmidadeSolo}</Text>
+                    <Text> Precipitação do dia: {precipitacaoTotal}</Text>
+                    <Text> Temperatura maxima: {tempMax}</Text>
+                    <Text> Temperatura minima: {tempMin}</Text>
+                    </View>
+                </View>
+
 
 
                     {logs && logs.map((item, index) => (
-                        <Text style={styles.text}key={index}> Horario: {item.horaDado}, temSolo: {item.tempSolo}, fosforo no Solo: {item.fosforoSolo},  nitrogenioSolo: {item.nitrogenioSolo}, potassioSolo:{item.potassioSolo}</Text>
-                        
+                        <View key={index} style={styles.logs}>
+                            <Text style={{fontWeight: 'bold'}}> {item.horaDado}</Text>
+
+                            <Text>Temperatura do solo: {item.tempSolo} </Text>
+                            <Text>Fosforo no Solo: {item.fosforoSolo}</Text>
+                            <Text>Nitrogenio do solo: {item.nitrogenioSolo}</Text>
+                            <Text>Potassio do solo: {item.potassioSolo}</Text>
+                            <Text>Umidade do ar: {item.umidadeAr}</Text>
+                            <Text>Umidade do solo: {item.umidadeSolo}</Text>
+                            <Text>Temperatura: {item.tempMax}</Text>
+                        </View>
                     ))}
-                </>
+                </View>
             )}
         </ScrollView>
     );
