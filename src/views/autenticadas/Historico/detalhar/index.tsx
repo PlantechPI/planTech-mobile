@@ -43,7 +43,6 @@ const HistoricoDetalhado: React.FC<{}> = ({}) => {
             setExisteDado(false)
             console.log('Exibir a página not found')
         }
-// Defina loading como falso após a obtenção dos dados
     }
 
     useEffect(() =>{
@@ -116,7 +115,7 @@ const HistoricoDetalhado: React.FC<{}> = ({}) => {
 
                 <View>
                 <View style={styles.tituloMedia}>
-                                <MaterialIcons name="percent" size={24} color='#000' />
+                                <MaterialIcons name="percent" size={20} color='#000' />
                                 <Text style={styles.titulo}> MÉDIAS DIÁRIAS</Text>
                             </View>
 

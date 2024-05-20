@@ -77,7 +77,7 @@ tituloMedia: {
 titulo:{
   fontWeight:'bold',
   justifyContent:'center',
-  fontSize:20
+  fontSize:16
 }
   });
 
