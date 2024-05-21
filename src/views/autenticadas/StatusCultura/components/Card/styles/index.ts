@@ -31,15 +31,29 @@ const styles = StyleSheet.create({
   icone:{
     width:'20%',
     alignItems:'center',
-    justifyContent:'center'
+    justifyContent:'center',
+    // paddingLeft:2
   },
-  texto:{
+  textoLabel:{
     color: '#7f7f7f', // Cinza
-    fontSize: 13,
+    fontSize: 12,
     fontFamily: Platform.OS === 'ios' ? 'Arial' : 'Roboto', // Uma fonte amigável comum
     fontWeight: '700', // Aumenta a grossura da letra
     marginBottom: 10,
     textAlign: 'center', // Opcional: centraliza o texto
+  },
+  textoInformacao:{
+    fontSize: 16,
+    justifyContent:'space-around',
+    fontWeight: '900'
+  },
+  fundoIcone:{
+    backgroundColor: 'rgb(240, 245, 252)',
+    height: '50%',
+    width: '70%',
+    justifyContent: 'center',
+    alignItems:'center',
+    borderRadius: 20
   }
   });
 
