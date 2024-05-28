@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import { View, Image, Text, TouchableOpacity} from 'react-native'
 import styles from './styles/style'
 import { CORES } from '../../../../../enum/Cores'
-import { AntDesign, FontAwesome, MaterialIcons, FontAwesome6, Ionicons, Entypo } from '@expo/vector-icons'
+import { AntDesign, FontAwesome, MaterialIcons, FontAwesome6, Ionicons, Fontisto, FontAwesome5 } from '@expo/vector-icons'
 import { AuthContext } from '../../../../../context/auth'
 import { useNavigation } from '@react-navigation/native';
 
@@ -20,7 +20,6 @@ const CardCadastrar:React.FC<ICardCadastrar> = ({ nomeCultura, nomeTipoCultura, 
 
   const mudaIdCultura = () => {
     setIdCultura(id_cultura_atual)
-    console.log('estou setando o valor do idCultura para: ', id_cultura_atual)
   };
   
   return (//Mostrar no card o nome, tipo da cultura, onde ela está situada e procurar mais alguma coisa para exibir, procurar um icone para cada
@@ -34,14 +33,16 @@ const CardCadastrar:React.FC<ICardCadastrar> = ({ nomeCultura, nomeTipoCultura, 
           <Text style={styles.titulo}>{nomeCultura}</Text>
           </View>
       
-    <Text> 
-    <FontAwesome6 name="plant-wilt" size={24} color='#000'/>
-      {nomeTipoCultura}
-    </Text>
-    <Text>
-      <Entypo name="location-pin" size={24} color='#000'/>
-      {local}
-    </Text>
+          <View style={styles.boxText}>
+    <FontAwesome5 name="leaf" size={24} color={CORES.verde} style={styles.icon} />
+    <Text style={styles.text}>{nomeTipoCultura}</Text>
+  </View>
+
+
+    <View style={styles.boxText}>
+      <Fontisto name="world-o" size={26} color={CORES.verde} style={styles.icon} />
+      <Text style={styles.text}>{local}</Text>
+    </View>
 
 
       </View>

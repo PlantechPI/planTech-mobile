@@ -22,7 +22,6 @@ const ListarCulturas = () => {
   useEffect(() => {
     const retornaCulturas = async () => {
       const listaCulturas = await listarCulturas();
-      console.log(listaCulturas)
       setCulturas(listaCulturas);
     };
     retornaCulturas();
@@ -37,7 +36,7 @@ const ListarCulturas = () => {
         {culturas.map((element: any, index: number) => (
           <CardCultura
             key={index} // Adicione uma chave única para cada componente na iteração
-            nomeCultura={`Cultura ${index+1}`}
+            nomeCultura={`CULTURA ${index+1}`}
             nomeTipoCultura={element.nomeCultura}
             local='Vitória, Espírito Santo'
             id_cultura_atual={element.idCultura}

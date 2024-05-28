@@ -6,6 +6,7 @@ import { useRoute } from '@react-navigation/native';
 import AuthContext from '../../../context/auth';
 import { Octicons } from '@expo/vector-icons';
 import Card from './components/Card'
+import { CORES } from '../../../enum/Cores';
 
 
 const StatusCultura = () => {
@@ -28,6 +29,7 @@ const StatusCultura = () => {
 
   const [ visibleDadosGerais, setVisibleDadosGerais] = useState(true)
   const [ visibleDadosDoSolo, setVisibleDadosDoSolo] = useState(true)
+  const [ visibleDadosGraficos, setVisibleDadosGraficos] = useState(true)
   
   
   const getCurrentDate = () => {
@@ -66,7 +68,6 @@ const StatusCultura = () => {
             }
         })
         const dadosMaisRecentes = dadosAtuais[(dadosAtuais.length-1)]
-        console.log(dadosMaisRecentes)
 
         setCurrentFosforo(Number((dadosMaisRecentes.fosforoSolo).toFixed(2)))
         setCurrentNitrogenio(Number((dadosMaisRecentes.nitrogenioSolo).toFixed(2)))
@@ -151,29 +152,47 @@ const StatusCultura = () => {
               {visibleDadosDoSolo ? (
                 <>
                 <Card 
-              icone={{nomeIcon: 'elevation-decline', directory:'MaterialCommunityIcons'}}
+              icone={{
+                nomeIcon: 'elevation-decline',
+                 directory:'MaterialCommunityIcons',
+                  color: currentTempSolo > 20 && currentTempSolo < 30 ? CORES.verdeClaro : 'red'}}
               label={'TEMPERATURA DO SOLO'} 
               informacao={String(currentTempSolo)}
               />
 
               <Card 
-              icone={{nomeIcon: 'chemical-weapon', directory:'MaterialCommunityIcons'}}
+              icone={{
+                nomeIcon: 'chemical-weapon', 
+                directory:'MaterialCommunityIcons',
+                color: currentNitrogenio > 15 && currentNitrogenio < 40 ? CORES.verdeClaro : 'red'
+              }}
               label={'NITROGENIO'} 
               informacao={String(currentNitrogenio)}
               /> 
               <Card 
-              icone={{nomeIcon: 'water', directory:'MaterialCommunityIcons'}}
-              label={'UMIDADE DO SOLO'} 
-              informacao={String(currentUmidadeSolo)}
+                icone={{ 
+                  nomeIcon: 'water', 
+                  directory: 'MaterialCommunityIcons', 
+                  color: currentUmidadeSolo > 90 || currentUmidadeSolo < 50 ? 'red' : CORES.verdeClaro 
+                }}
+                label={'UMIDADE DO SOLO'} 
+                informacao={String(currentUmidadeSolo)}
               /> 
 
               <Card 
-              icone={{nomeIcon: 'pill', directory:'MaterialCommunityIcons'}}
+              icone={{
+                nomeIcon: 'pill', 
+                directory:'MaterialCommunityIcons',
+                color: currentPotassio > 100 && currentPotassio < 150 ? CORES.verdeClaro : 'red'
+              }}
               label={'POTÁSSIO'} 
               informacao={String(currentPotassio)}
               />
               <Card 
-              icone={{nomeIcon: 'flask-outline', directory:'MaterialCommunityIcons', color:'red'}}
+              icone={{
+                nomeIcon: 'flask-outline', 
+                directory:'MaterialCommunityIcons',
+                 color: currentFosforo > 15 && currentFosforo < 50 ? CORES.verdeClaro : 'red'}}
               label={'FÓSFORO'} 
               informacao={String(currentFosforo)}
               />         
@@ -182,6 +201,24 @@ const StatusCultura = () => {
 
                  
             </View>
+
+            <View style={styles.tituloSecundario}>
+                <View style={{width:'90%'}}>
+                  <Text style={styles.textTitulo}> GRÁFICOS </Text>
+                </View>
+                <View style={{width:'10%'}}>
+                  <TouchableOpacity onPress={() => setVisibleDadosGraficos((prevState) => (!prevState))}>
+                    <Text style={styles.textTitulo}> {visibleDadosGraficos ? <Octicons name='chevron-down' size={26}/> : <Octicons name='chevron-up' size={26}/>} </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              {visibleDadosGraficos ? (
+                <View>
+                  <Text>Olá gráfico</Text>
+                </View>
+              ) : (null)}
+
           </ScrollView>
 
     )

@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         elevation: 5,
         backgroundColor: CORES.background,
+        gap: 5
         
     },
     textoh1:{
@@ -28,8 +29,24 @@ const styles = StyleSheet.create({
         justifyContent:'center'
       },
       titulo:{
-        fontWeight:'bold'
-      }
+        fontFamily: 'Roboto',
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#000',
+        marginHorizontal:10
+      },
+      boxText: {
+        flexDirection: 'row',
+        alignItems: 'center', // Isso alinha os itens verticalmente
+      },
+      icon: {
+        marginRight: 5, // Espaço entre o ícone e o texto
+      },
+      text: {
+        fontSize: 16, // Tamanho do texto
+        color: '#333', // Cor do texto
+      },
+      
   });
 
   export default  styles 

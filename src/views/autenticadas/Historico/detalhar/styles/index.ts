@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   cardPrinpipal:{
     width:'90%',
-    height:240,
+    height:260,
     borderRadius:10,
     elevation:3,
     backgroundColor:'#FFF',
@@ -77,8 +77,15 @@ tituloMedia: {
 titulo:{
   fontWeight:'bold',
   justifyContent:'center',
-  fontSize:16
-}
+  fontSize:22
+},
+texto:{
+  fontFamily: 'Roboto',
+  fontSize: 16,
+  // fontWeight: 'bold',
+  color: '#000',
+  marginHorizontal:10
+},
   });
 
   export default styles

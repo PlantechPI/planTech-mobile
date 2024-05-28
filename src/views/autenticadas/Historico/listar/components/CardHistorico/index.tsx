@@ -11,7 +11,6 @@ const CardHistorico: React.FC<ICardHistorico> = ({ data }) => {
   const navigation = useNavigation();
 
   const detalharHistorico = () => {
-    console.log('data: ', data);
     navigation.navigate('HistoricoDetalhado', { data: data });
   };
 

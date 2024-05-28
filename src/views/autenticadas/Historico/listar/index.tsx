@@ -85,7 +85,6 @@ const geraMaisDatas = () =>{
   generateDates()
 } 
 
-console.log('lista de datas: ', listaDeDatas)
 
 const renderItem = ({ item }: any) => (
   <View style={{ padding: 10 }}>

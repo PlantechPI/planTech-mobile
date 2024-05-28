@@ -35,13 +35,11 @@ const HistoricoDetalhado: React.FC<{}> = ({}) => {
         const res = await listarInformacoesDiarias(data)
         const evapoDodia = await evapoDoDia(data)
         setEvapo(evapoDodia.ETO)
-        console.log('evapo', evapo.ETO)
         if(res.length !== 0){
             setLogs(res)
             setLoading(false); 
         }else{
             setExisteDado(false)
-            console.log('Exibir a página not found')
         }
     }
 
@@ -115,20 +113,20 @@ const HistoricoDetalhado: React.FC<{}> = ({}) => {
 
                 <View>
                 <View style={styles.tituloMedia}>
-                                <MaterialIcons name="percent" size={20} color='#000' />
+                                <MaterialIcons name="percent" size={26} color='#000' />
                                 <Text style={styles.titulo}> MÉDIAS DIÁRIAS</Text>
                             </View>
 
-                    <Text> Evapotranspiração do dia: {evapo}</Text>
-                    <Text> Media fósforo: {mediaFosforo}</Text>
-                    <Text> Media Nitrogenio: {mediaNitrogenio}</Text>
-                    <Text> Media Potassio: {mediaPotassio}</Text>
-                    <Text> Media umidade do ar: {mediaUmidadeAr}</Text>
-                    <Text> Media umidade do solo: {mediaUmidadeSolo}</Text>
-                    <Text> Media temperatura do solo: {mediaTempSolo}</Text>
-                    <Text> Precipitação do dia: {precipitacaoTotal}</Text>
-                    <Text> Temperatura maxima: {tempMax}</Text>
-                    <Text> Temperatura minima: {tempMin}</Text>
+                    <Text style={styles.texto}>Evapotranspiração do dia: <Text style={{fontWeight: 500}}>{evapo}</Text></Text>
+                    <Text style={styles.texto}>Media fósforo: <Text style={{fontWeight: 500}}>{mediaFosforo}</Text></Text>
+                    <Text style={styles.texto}>Media Nitrogenio: <Text style={{fontWeight: 500}}>{mediaNitrogenio}</Text></Text>
+                    <Text style={styles.texto}>Media Potassio: <Text style={{fontWeight: 500}}>{mediaPotassio}</Text></Text>
+                    <Text style={styles.texto}>Media umidade do ar: <Text style={{fontWeight: 500}}>{mediaUmidadeAr}</Text></Text>
+                    <Text style={styles.texto}>Media umidade do solo: <Text style={{fontWeight: 500}}>{mediaUmidadeSolo}</Text></Text>
+                    <Text style={styles.texto}>Media temperatura do solo: <Text style={{fontWeight: 500}}>{mediaTempSolo}</Text></Text>
+                    <Text style={styles.texto}>Precipitação do dia: <Text style={{fontWeight: 500}}>{precipitacaoTotal}</Text></Text>
+                    <Text style={styles.texto}>Temperatura maxima: <Text style={{fontWeight: 500}}>{tempMax}</Text></Text>
+                    <Text style={styles.texto}>Temperatura minima: <Text style={{fontWeight: 500}}>{tempMin}</Text></Text>
                     </View>
                 </View>
 
@@ -136,15 +134,15 @@ const HistoricoDetalhado: React.FC<{}> = ({}) => {
 
                     {logs && logs.map((item, index) => (
                         <View key={index} style={styles.logs}>
-                            <Text style={{fontWeight: 'bold'}}> {extrairHorasMinutos(item.horaDado)}</Text>
+                            <Text style={{fontWeight: 'bold', fontSize: 26}}> {extrairHorasMinutos(item.horaDado)}</Text>
 
-                            <Text>Temperatura do solo: {item.tempSolo} </Text>
-                            <Text>Fosforo no Solo: {item.fosforoSolo}</Text>
-                            <Text>Nitrogenio do solo: {item.nitrogenioSolo}</Text>
-                            <Text>Potassio do solo: {item.potassioSolo}</Text>
-                            <Text>Umidade do ar: {item.umidadeAr}</Text>
-                            <Text>Umidade do solo: {item.umidadeSolo}</Text>
-                            <Text>Temperatura: {item.tempMax}</Text>
+                            <Text style={styles.texto}>Temperatura do solo: <Text style={{fontWeight: 500}}>{item.tempSolo}</Text> </Text>
+                            <Text style={styles.texto}>Fosforo no Solo: <Text style={{fontWeight: 500}}>{item.fosforoSolo}</Text></Text>
+                            <Text style={styles.texto}>Nitrogenio do solo: <Text style={{fontWeight: 500}}>{item.nitrogenioSolo}</Text></Text>
+                            <Text style={styles.texto}>Potassio do solo: <Text style={{fontWeight: 500}}>{item.potassioSolo}</Text></Text>
+                            <Text style={styles.texto}>Umidade do ar: <Text style={{fontWeight: 500}}>{item.umidadeAr}</Text></Text>
+                            <Text style={styles.texto}>Umidade do solo: <Text style={{fontWeight: 500}}>{item.umidadeSolo}</Text></Text>
+                            <Text style={styles.texto}>Temperatura: <Text style={{fontWeight: 500}}>{item.tempMax}</Text></Text>
                         </View>
                     ))}
                 </View>
