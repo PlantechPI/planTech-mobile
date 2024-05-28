@@ -7,6 +7,14 @@ import AuthContext from '../../../context/auth';
 import { Octicons } from '@expo/vector-icons';
 import Card from './components/Card'
 import { CORES } from '../../../enum/Cores';
+import {
+  Bar,
+  CartesianChart,
+  useBarPath,
+  type PointsArray,
+  type ChartBounds,
+} from "victory-native";
+import { Path } from "@shopify/react-native-skia"
 
 
 const StatusCultura = () => {
@@ -82,6 +90,27 @@ const StatusCultura = () => {
         setUltimaAtualizacao(dadosMaisRecentes.horaDado)
     }
 }, [dadosAtuais])
+
+function MyCustomBars({
+  points,
+  chartBounds,
+  innerPadding,
+}: {
+  points: PointsArray;
+  chartBounds: ChartBounds;
+  innerPadding?: number;
+}) {
+  // 👇 use the hook to generate a path object.
+  const { path } = useBarPath(points, chartBounds, innerPadding);
+  return <Path path={path} style="fill" color="red" />;
+}
+
+const data = [
+  { x: 'A', y: 2 },
+  { x: 'B', y: 3 },
+  { x: 'C', y: 5 },
+  { x: 'D', y: 4 },
+];
 
 
     return (
@@ -217,7 +246,21 @@ const StatusCultura = () => {
                 <View>
                   <Text>Olá gráfico</Text>
                 </View>
-              ) : (null)}
+              ) : (
+                <View style={{ height: 300, width: 300 }}>
+    <CartesianChart data={data} xKey="x" yKeys={["y"]}>
+      {({ points, chartBounds }) => (
+        //👇 pass a PointsArray to the Bar component, as well as options.
+        <Bar
+          points={points.y}
+          chartBounds={chartBounds}
+          color="red"
+          roundedCorners={{ topLeft: 10, topRight: 10 }}
+        />
+      )}
+    </CartesianChart>
+              </View>
+              )}
 
           </ScrollView>
 
