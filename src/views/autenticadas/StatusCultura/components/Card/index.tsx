@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, TouchableHighlight, Modal } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
@@ -13,10 +13,15 @@ interface ICardStatusCultura {
     color?: string;
   };
   label?: string;
+  modal?: {
+    title?: string,
+    text?: string,
+
+  }
 }
 
-const StatusCultura: React.FC<ICardStatusCultura> = ({ informacao, icone, label }) => {
-  
+const StatusCultura: React.FC<ICardStatusCultura> = ({ informacao, icone, label, modal }) => {
+  const [isVisible, setIsVisible] = useState(false);
   const [icon, setIcon] = useState<JSX.Element | null>(null);
 
   useEffect(() => {
@@ -29,19 +34,41 @@ const StatusCultura: React.FC<ICardStatusCultura> = ({ informacao, icone, label 
   }, [icone]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.box}>
-        <View style={styles.icone}>
-          <View style={styles.fundoIcone}>
-            {icon && <View>{icon}</View>}
+    <>
+    <TouchableOpacity onPress={() => setIsVisible(true)}>
+      <View style={styles.container}>
+        <View style={styles.box}>
+          <View style={styles.icone}>
+            <View style={styles.fundoIcone}>
+              {icon && <View>{icon}</View>}
+            </View>
+          </View>
+          <View style={styles.informacoes}>
+            <Text style={styles.textoLabel}>{label}</Text>
+            <Text style={styles.textoInformacao}>{informacao}</Text>
           </View>
         </View>
-        <View style={styles.informacoes}>
-          <Text style={styles.textoLabel}>{label}</Text>
-          <Text style={styles.textoInformacao}>{informacao}</Text>
-        </View>
       </View>
-    </View>
+    </TouchableOpacity>
+     
+          <Modal
+          animationType="fade"
+          transparent={true}
+          visible={isVisible}
+          onRequestClose={() => setIsVisible(false)}
+          >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalTitle}>{modal?.title}</Text>
+              <Text>{modal?.text}</Text>
+              <TouchableOpacity onPress={() => setIsVisible(false)}>
+                <Text style={styles.closeButton}>Fechar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        </>
+    
   );
 };
 

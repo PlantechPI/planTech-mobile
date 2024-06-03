@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
 tituloMedia: {
   flexDirection: 'row',
   alignItems: 'center',
+  justifyContent:'center'
 },
 titulo:{
   fontWeight:'bold',

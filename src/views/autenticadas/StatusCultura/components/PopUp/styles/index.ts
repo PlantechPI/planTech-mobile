@@ -1,5 +1,4 @@
 import { StyleSheet, Platform } from "react-native";
-import { CORES } from "../../../../../../enum/Cores";
 
 const styles = StyleSheet.create({
   container:{
@@ -55,35 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems:'center',
     borderRadius: 20
-  },
-  tudo: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalView: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    elevation: 5,
-    minWidth: 300,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  closeButton: {
-    marginTop: 20,
-    textAlign: 'center',
-    color: CORES.verde,
-  },
+  }
   });
 
   export default styles

@@ -113,7 +113,6 @@ const HistoricoDetalhado: React.FC<{}> = ({}) => {
 
                 <View>
                 <View style={styles.tituloMedia}>
-                                <MaterialIcons name="percent" size={26} color='#000' />
                                 <Text style={styles.titulo}> MÉDIAS DIÁRIAS</Text>
                             </View>
 
