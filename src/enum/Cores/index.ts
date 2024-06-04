@@ -3,7 +3,8 @@ const CORES = Object.freeze({
     verde: '#004e4a',
     verdeClaro: '#21b102',
     branco: '#f9fffb',
-    background: '#F5F5F5'
+    background: '#F5F5F5',
+    vermelho: '#FF6961'
 })
 
 export {CORES} 

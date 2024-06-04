@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#fff'
   },
   halfBackground: {
-    flex: 0.2, // Metade da tela
+    flex: 0.13, // Metade da tela
     backgroundColor: CORES.primaria, // Cor de fundo desejada
   },
   contentContainer: {
