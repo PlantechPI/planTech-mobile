@@ -96,13 +96,21 @@ const renderItem = ({ item }: any) => (
     const navigation = useNavigation();
     return (
           <View style={styles.container}>
-                <FlatList 
-                  data={listaDeDatas}
-                  keyExtractor={item => item}
-                  renderItem={renderItem}
-                  onEndReached={geraMaisDatas}
-                  style={[{ flex: 1 }, styles.conteudo]}
-                  />
+            <View style={styles.tituloPrincipal}>
+              <View>
+                <Text style={styles.titulo}>HISTÓRICO</Text>
+              </View>
+            </View>
+            <View>
+
+            <FlatList 
+              data={listaDeDatas}
+              keyExtractor={item => item}
+              renderItem={renderItem}
+              onEndReached={geraMaisDatas}
+              style={[{ flex: 1 }, styles.conteudo]}
+              />
+            </View>
           </View>
 
     )

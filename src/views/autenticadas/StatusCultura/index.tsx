@@ -172,74 +172,75 @@ const StatusCultura = () => {
         </View>
 
         {visibleDadosDoSolo ? (
-          <>
-            <Card 
-              icone={{
-                nomeIcon: 'elevation-decline',
-                directory:'MaterialCommunityIcons',
-                color: currentTempSolo > 20 && currentTempSolo < 30 ? CORES.verdeClaro : 'red'
-              }}
-              label={'TEMPERATURA DO SOLO'} 
-              informacao={String(currentTempSolo)}
-              modal={{
-                title: 'Temperatura do Solo (°C)',
-                text: 'A temperatura do solo é a medida de calor no solo, influenciada pela temperatura do ar, radiação solar e umidade. É crucial para processos como germinação de sementes e atividade microbiana. Temperaturas extremas podem afetar negativamente o crescimento das plantas e a disponibilidade de nutrientes.'
-              }}
-            />
-            <Card 
-              icone={{
-                nomeIcon: 'chemical-weapon', 
-                directory:'MaterialCommunityIcons',
-                color: currentNitrogenio > 15 && currentNitrogenio < 40 ? CORES.verdeClaro : 'red'
-              }}
-              label={'NITROGÊNIO'} 
-              informacao={String(currentNitrogenio)}
-              modal={{
-                title: 'Nitrogênio (mg/kg)',
-                text: 'O nitrogênio é um nutriente essencial para o crescimento das plantas, vital para a formação de proteínas e clorofila. Níveis adequados de nitrogênio promovem um crescimento vigoroso e produtivo, enquanto deficiências podem causar folhas amareladas e baixo rendimento.'
-              }}
-            /> 
-            <Card 
-              icone={{ 
-                nomeIcon: 'water', 
-                directory: 'MaterialCommunityIcons', 
-                color: currentUmidadeSolo > 90 || currentUmidadeSolo < 50 ? 'red' : CORES.verdeClaro 
-              }}
-              label={'UMIDADE DO SOLO'} 
-              informacao={String(currentUmidadeSolo)}
-              modal={{
-                title: 'Umidade do Solo (%)',
-                text: 'A umidade do solo é a quantidade de água presente no solo, vital para o crescimento das plantas. Ela influencia a absorção de nutrientes e o desenvolvimento das raízes. Níveis inadequados de umidade podem causar estresse hídrico, afetando negativamente o crescimento e a saúde das plantas.'
-              }}
-            /> 
-            <Card 
-              icone={{
-                nomeIcon: 'pill', 
-                directory:'MaterialCommunityIcons',
-                color: currentPotassio > 100 && currentPotassio < 150 ? CORES.verdeClaro : 'red'
-              }}
-              label={'POTÁSSIO'} 
-              informacao={String(currentPotassio)}
-              modal={{
-                title: 'Potássio (mg/kg)',
-                text: 'O potássio é um nutriente essencial que ajuda na resistência das plantas a doenças, regulação da abertura dos estômatos e síntese de proteínas. Níveis adequados de potássio melhoram a qualidade dos frutos e a resistência ao estresse. Deficiências podem causar folhas amareladas e produtividade reduzida.'
-              }}
-            />
-            <Card 
-              icone={{
-                nomeIcon: 'flask-outline', 
-                directory:'MaterialCommunityIcons',
-                color: currentFosforo > 15 && currentFosforo < 50 ? CORES.verdeClaro : 'red'
-              }}
-              label={'FÓSFORO'} 
-              informacao={String(currentFosforo)}
-              modal={{
-                title: 'Fósforo (mg/kg)',
-                text: 'O fósforo é crucial para o desenvolvimento das raízes e a floração das plantas. Ele ajuda na transferência de energia e na formação de sementes e frutos. Níveis adequados de fósforo promovem um crescimento saudável e uma colheita abundante, enquanto deficiências podem resultar em crescimento atrofiado e baixo rendimento.'
-              }}
-            />         
-          </>
-        ) : null}
+  <>
+    <Card 
+      icone={{
+        nomeIcon: 'elevation-decline',
+        directory: 'MaterialCommunityIcons',
+        color: currentTempSolo > 20 && currentTempSolo < 30 ? CORES.verdeClaro : 'red'
+      }}
+      label={'TEMPERATURA DO SOLO'} 
+      informacao={String(currentTempSolo)}
+      modal={{
+        title: 'Temperatura do Solo (°C)',
+        text: 'A temperatura do solo é a medida de calor no solo, influenciada pela temperatura do ar, radiação solar e umidade. É crucial para processos como germinação de sementes e atividade microbiana. Temperaturas extremas podem afetar negativamente o crescimento das plantas e a disponibilidade de nutrientes. A faixa considerada ideal é entre 20°C e 30°C. Valores fora dessa faixa não são recomendados.'
+      }}
+    />
+    <Card 
+      icone={{
+        nomeIcon: 'chemical-weapon', 
+        directory: 'MaterialCommunityIcons',
+        color: currentNitrogenio > 15 && currentNitrogenio < 40 ? CORES.verdeClaro : 'red'
+      }}
+      label={'NITROGÊNIO'} 
+      informacao={String(currentNitrogenio)}
+      modal={{
+        title: 'Nitrogênio (mg/kg)',
+        text: 'O nitrogênio é um nutriente essencial para o crescimento das plantas, vital para a formação de proteínas e clorofila. Níveis adequados de nitrogênio promovem um crescimento vigoroso e produtivo, enquanto deficiências podem causar folhas amareladas e baixo rendimento. A faixa considerada ideal é entre 15 mg/kg e 40 mg/kg. Valores fora dessa faixa não são recomendados.'
+      }}
+    /> 
+    <Card 
+      icone={{ 
+        nomeIcon: 'water', 
+        directory: 'MaterialCommunityIcons', 
+        color: currentUmidadeSolo > 90 || currentUmidadeSolo < 50 ? 'red' : CORES.verdeClaro 
+      }}
+      label={'UMIDADE DO SOLO'} 
+      informacao={String(currentUmidadeSolo)}
+      modal={{
+        title: 'Umidade do Solo (%)',
+        text: 'A umidade do solo é a quantidade de água presente no solo, vital para o crescimento das plantas. Ela influencia a absorção de nutrientes e o desenvolvimento das raízes. Níveis inadequados de umidade podem causar estresse hídrico, afetando negativamente o crescimento e a saúde das plantas. A faixa considerada ideal é entre 50% e 90%. Valores fora dessa faixa não são recomendados.'
+      }}
+    /> 
+    <Card 
+      icone={{
+        nomeIcon: 'pill', 
+        directory: 'MaterialCommunityIcons',
+        color: currentPotassio > 100 && currentPotassio < 150 ? CORES.verdeClaro : 'red'
+      }}
+      label={'POTÁSSIO'} 
+      informacao={String(currentPotassio)}
+      modal={{
+        title: 'Potássio (mg/kg)',
+        text: 'O potássio é um nutriente essencial que ajuda na resistência das plantas a doenças, regulação da abertura dos estômatos e síntese de proteínas. Níveis adequados de potássio melhoram a qualidade dos frutos e a resistência ao estresse. Deficiências podem causar folhas amareladas e produtividade reduzida. A faixa considerada ideal é entre 100 mg/kg e 150 mg/kg. Valores fora dessa faixa não são recomendados.'
+      }}
+    />
+    <Card 
+      icone={{
+        nomeIcon: 'flask-outline', 
+        directory: 'MaterialCommunityIcons',
+        color: currentFosforo > 15 && currentFosforo < 50 ? CORES.verdeClaro : 'red'
+      }}
+      label={'FÓSFORO'} 
+      informacao={String(currentFosforo)}
+      modal={{
+        title: 'Fósforo (mg/kg)',
+        text: 'O fósforo é crucial para o desenvolvimento das raízes e a floração das plantas. Ele ajuda na transferência de energia e na formação de sementes e frutos. Níveis adequados de fósforo promovem um crescimento saudável e uma colheita abundante, enquanto deficiências podem resultar em crescimento atrofiado e baixo rendimento. A faixa considerada ideal é entre 15 mg/kg e 50 mg/kg. Valores fora dessa faixa não são recomendados.'
+      }}
+    />         
+  </>
+) : null}
+
 
       </View>
 

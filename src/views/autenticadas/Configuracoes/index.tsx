@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import { View, Image, TextInput, Button, Platform, Alert, KeyboardAvoidingView, Keyboard, SafeAreaView, LayoutAnimation, LayoutAnimationConfig, ImageBackground, Text } from 'react-native'
+import { View, TextInput, Text } from 'react-native'
 import styles  from './styles'
 import ButtonComponent from '../../../components/ButtonComponent';
 import { useNavigation } from '@react-navigation/native';
@@ -10,7 +10,12 @@ const Configuracoes = () => {
     const navigation = useNavigation();
     return (
       <View style={styles.container}>
-        <View style={styles.modalView}>
+        <View style={styles.tituloPrincipal}>
+          <View>
+            <Text style={styles.titulo}>MEU PERFIL</Text>
+          </View>
+        </View>
+        <View style={styles.formView}>
                 <Text style={styles.textoh1}>Nome</Text>
                 <TextInput
                   style={styles.btnInput}
@@ -35,16 +40,17 @@ const Configuracoes = () => {
                   // onChangeText={(newSenha) => setNewSenha(newSenha)}
                   // value={newSenha}
                 />
-                              <View style={styles.botao}>
+                <View style={styles.botao}>
                 <ButtonComponent
                   textoBtn='Alterar'
+                  backGroundColor={CORES.verde}
                   // onPress={cadastrarUsuario}
                   />
               </View>
               <View>
                 <ButtonComponent
-                  textoBtn='Ativar bomba'
-                  backGroundColor={CORES.vermelho}
+                  textoBtn='Ativar Bomba'
+                  backGroundColor={CORES.verde}
                   // onPress={cadastrarUsuario}
                   />
               </View>

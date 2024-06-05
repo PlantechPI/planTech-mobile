@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 5,
     minWidth: 300,
+    marginHorizontal:10
   },
   modalTitle: {
     fontSize: 18,
