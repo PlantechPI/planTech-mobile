@@ -1,200 +1,137 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, Image, Modal, TextInput, ImageBackground, TouchableOpacity, Text, Alert } from 'react-native';
-import styles from './styles';
-import SplashScreen from '../../../components/splashScreen/index';
-import ButtonComponent from '../../../components/ButtonComponent';
-import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../../../context/auth'
+import React, { createContext, useState, ReactNode } from "react";
+import { Alert } from "react-native";
+import axios from "axios";
+import { FuncaoNoSistema } from "../../../enum/FuncaoNoSistema";
 
-const Home = () => {
-  const { cadastrar, login } = useContext(AuthContext)
-  const navigation = useNavigation();
-  const [exibeSplashScreen, setExibeSplashScreen] = useState<boolean>(true);
-  const [loginModalVisible, setLoginModalVisible] = useState<boolean>(false);
-  const [signupModalVisible, setSignupModalVisible] = useState<boolean>(false);
-  const imagens = [require('../../../assets/images/imagem2.jpg'), require('../../../assets/images/imagem1.jpg'), require('../../../assets/images/imagem3.jpg'), require('../../../assets/images/imagem4.jpg'), require('../../../assets/images/imagem5.jpg'), require('../../../assets/images/imagem6.jpg'), require('../../../assets/images/imagem7.jpg'), require('../../../assets/images/imagem8.jpg')]
-  const [numAleatorio, setNumAleatorio] = useState<number>(0)
+type AuthContextType = {
+  auth: boolean;
+  setAuth: React.Dispatch<React.SetStateAction<boolean>>;
+  id_Usuario: string;
+  setIdUsuario: React.Dispatch<React.SetStateAction<string>>;
+  cadastrar: (nome: string, email: string, senha: string) => Promise<boolean>;
+  login: (email: string, senha: string) => Promise<boolean>;
+  logout: () => void;
+  user: any;
+  listarCulturas: () => Promise<any>;
+  id_cultura: string;
+  setIdCultura: React.Dispatch<React.SetStateAction<string>>;
+  listarInformacoesDiarias: (dataString: string) => Promise<any>;
+  evapoDoDia: (dataString: string) => Promise<any>;
+};
 
-  const [newNome, setNewNome] = useState('');
-  const [newEmail, setNewEmail] = useState('');
-  const [newSenha, setNewSenha] = useState('');
+export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [auth, setAuth] = useState<boolean>(false);
+  const [id_Usuario, setIdUsuario] = useState<string>('');
+  const [user, setUser] = useState<any>({});
+  const [id_cultura, setIdCultura] = useState<string>('');
+  const [idCoordenada, setIdCoordenada] = useState<number>(1);
 
-  const getRandomInt = (min:number, max:number):number => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min);
-  }
-
-  useEffect(() => {
-    exibeTelaInicial();
-    setNumAleatorio(getRandomInt(0,7))
-  }, []);
-
-  const exibeTelaInicial = () => {
-    setTimeout(() => {
-      setExibeSplashScreen(false);
-    }, 2000);
-  };
-
-  const openLoginModal = () => {
-    setLoginModalVisible(true);
-  };
-
-  const closeLoginModal = () => {
-    setLoginModalVisible(false);
-  };
-
-  const openSignupModal = () => {
-    setSignupModalVisible(true);
-  };
-
-  const closeSignupModal = () => {
-    setSignupModalVisible(false);
-  };
-
-  const handleLoginModalPressOutside = () => {
-    closeLoginModal();
-  };
-
-  const handleSignupModalPressOutside = () => {
-    closeSignupModal();
-  };
-
-  const cadastrarUsuario = async() =>{
-    const res = await cadastrar(newNome, newEmail, newSenha)
-    limparCadastro()
-  }
-
-  const limparLogin = () =>{
-    setEmail('')
-    setSenha('')
-  }
-
-  const limparCadastro = () =>{
-    setNewEmail('')
-    setNewNome('')
-    setNewSenha('')
-  }
-
-  const logarUsuario = async() =>{
-    const resLogin = await login(email, senha)
-    
-    if(!resLogin){
-      limparLogin()
-      closeLoginModal()
-      Alert.alert('ERRO: ', 'resLogin')
+  const api = axios.create({
+    baseURL: 'http://34.151.221.155',
+    timeout: 10000,
+    headers: {
+      'Content-Type': 'application/json',
     }
-  }
+  });
+
+  api.interceptors.response.use(
+    response => response,
+    error => {
+      if (error.response) {
+        // A resposta foi recebida, mas o servidor respondeu com um status fora do range 2xx
+        console.error('Erro na resposta da API:', error.response.data);
+        console.error('Status:', error.response.status);
+        console.error('Headers:', error.response.headers);
+      } else if (error.request) {
+        // A requisição foi feita mas nenhuma resposta foi recebida
+        console.error('Nenhuma resposta recebida:', error.request);
+      } else {
+        // Algo aconteceu na configuração da requisição que gerou um erro
+        console.error('Erro na configuração da requisição:', error.message);
+      }
+      return Promise.reject(error);
+    }
+  );
+
+  const cadastrar = async (nome: string, email: string, senha: string) => {
+    try {
+      const payload = { nameUser: nome, emailUser: email, passUser: senha, typeUser: FuncaoNoSistema.agricultor };
+      await api.post('/user', payload);
+      setAuth(true);
+      return true;
+    } catch (error) {
+      console.error('Erro ao cadastrar:', error);
+      setAuth(false);
+      return false;
+    }
+  };
+
+  const login = async (email: string, senha: string): Promise<boolean> => {
+    try {
+      const payload = { emailUser: email, passUser: senha, typeUser: FuncaoNoSistema.agricultor };
+      const response = await api.post('/login', payload);
+      Alert.alert('Res', JSON.stringify(response));
+      setIdUsuario(String(response.data.idUsuario));
+      setAuth(true);
+      return true;
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      Alert.alert('Res', JSON.stringify(error));
+      return false;
+    }
+  };
+
+  const listarCulturas = async () => {
+    try {
+      const payload = { user_id: id_Usuario };
+      const response = await api.get('/listCulturas', { params: payload });
+      setAuth(true);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao listar culturas:', error);
+      return false;
+    }
+  };
+
+  const listarInformacoesDiarias = async (dataString: string) => {
+    try {
+      const [dia, mes, ano] = dataString.split('/');
+      const data_atual = `${ano}-${mes}-${dia}`;
+      const url = `/dados/${id_cultura}/${idCoordenada}/${data_atual}/${data_atual}`;
+      const response = await api.get(url);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao listar informações diárias:', error);
+      return false;
+    }
+  };
+
+  const evapoDoDia = async (dataString: string) => {
+    try {
+      const [dia, mes, ano] = dataString.split('/');
+      const data_atual = `${ano}-${mes}-${dia}`;
+      const url = `/evapo/${data_atual}/${id_cultura}`;
+      const response = await api.get(url);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao obter evapotranspiração do dia:', error);
+      return false;
+    }
+  };
+
+  const logout = () => {
+    setAuth(false);
+    setIdUsuario('');
+    setUser({});
+  };
 
   return (
-    exibeSplashScreen ? (
-      <SplashScreen />
-    ) : (
-      <ImageBackground
-        source={imagens[numAleatorio]}
-        style={styles.container}
-      >
-        <View style={styles.parteCima}>
-          <View style={styles.imageLogo}>
-            <Image source={require('../../../assets/images/iconePlanThec.png')} />
-          </View>
-        </View>
-        <View style={styles.parteBaixo}>
-          <ButtonComponent
-            textoBtn='Logar'
-            onPress={openLoginModal}
-          />
-          <ButtonComponent
-            textoBtn='Cadastrar'
-            onPress={openSignupModal}
-          />
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={loginModalVisible}
-            onRequestClose={closeLoginModal} //validar dados
-          >
-            <TouchableOpacity
-              style={styles.modalContainer}
-              activeOpacity={1}
-              onPress={handleLoginModalPressOutside} //validar dados
-            >
-              <View style={styles.modalView}>
-                <Text style={styles.textoh1}>Digite seu email</Text>
-                <TextInput
-                  style={styles.btnInput}
-                  placeholder="Email"
-                  onChangeText={(email) => setEmail(email)}
-                  value={email}
-                />
-
-                <Text style={styles.textoh1}>Digite sua senha</Text>
-                <TextInput
-                  style={styles.btnInput}
-                  placeholder="Senha"
-                  secureTextEntry={true}
-                  onChangeText={(senha) => setSenha(senha)}
-                  value={senha}
-                />
-
-                <ButtonComponent
-                  textoBtn='Logar'
-                  onPress={logarUsuario}
-                />
-              </View>
-            </TouchableOpacity>
-          </Modal>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={signupModalVisible}
-            onRequestClose={closeSignupModal}
-          >
-            <TouchableOpacity
-              style={styles.modalContainer}
-              activeOpacity={1}
-              onPress={handleSignupModalPressOutside} //cadastrar usuario
-            >
-              <View style={styles.modalView}>
-                <Text style={styles.textoh1}>Digite seu nome</Text>
-                <TextInput
-                  style={styles.btnInput}
-                  placeholder="Nome"
-                  onChangeText={(newNome) => setNewNome(newNome)}
-                  value={newNome}
-                />
-
-                <Text style={styles.textoh1}>Digite seu email</Text>
-                <TextInput
-                  style={styles.btnInput}
-                  placeholder="Email"
-                  onChangeText={(newEmail) => setNewEmail(newEmail)}
-                  value={newEmail}
-                />
-
-                <Text style={styles.textoh1}>Digite sua senha</Text>
-                <TextInput
-                  style={styles.btnInput}
-                  placeholder="Senha"
-                  secureTextEntry={true}
-                  onChangeText={(newSenha) => setNewSenha(newSenha)}
-                  value={newSenha}
-                />
-
-                <ButtonComponent
-                  textoBtn='Cadastrar'
-                  onPress={cadastrarUsuario}
-                />
-              </View>
-            </TouchableOpacity>
-          </Modal>
-        </View>
-      </ImageBackground>
-    )
+    <AuthContext.Provider value={{ auth, setAuth, id_Usuario, setIdUsuario, cadastrar, login, logout, user, listarCulturas, id_cultura, setIdCultura, listarInformacoesDiarias, evapoDoDia }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
-export default Home;
+export default AuthContext;
