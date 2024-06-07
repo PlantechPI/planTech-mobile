@@ -1,5 +1,4 @@
-import React, { createContext, useState, ReactNode, } from "react";
-import { Alert } from "react-native";
+import React, { createContext, useState, ReactNode } from "react";
 import axios from "axios";
 import { FuncaoNoSistema } from '../../enum/FuncaoNoSistema';
 
@@ -25,10 +24,32 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [auth, setAuth] = useState<boolean>(false);
   const [id_Usuario, setIdUsuario] = useState<string>('');
   const [user, setUser] = useState<any>({});
-  const [id_cultura, setIdCultura] = useState('');
-  const [idCoordenada, setIdCoordenada] = useState(1);
+  const [id_cultura, setIdCultura] = useState<string>('');
+  const [idCoordenada, setIdCoordenada] = useState<number>(1);
 
-  const api = axios.create({ baseURL: 'http://34.151.221.155' });
+  const api = axios.create({
+    baseURL: 'http://34.151.221.155',
+    timeout: 10000,
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+
+  api.interceptors.response.use(
+    response => response,
+    error => {
+      if (error.response) {
+        console.error('Erro na resposta da API:', error.response.data);
+        console.error('Status:', error.response.status);
+        console.error('Headers:', error.response.headers);
+      } else if (error.request) {
+        console.error('Nenhuma resposta recebida:', error.request);
+      } else {
+        console.error('Erro na configuração da requisição:', error.message);
+      }
+      return Promise.reject(error);
+    }
+  );
 
   const cadastrar = async (nome: string, email: string, senha: string) => {
     try {
@@ -37,6 +58,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setAuth(true);
       return true;
     } catch (error) {
+      console.error('Erro ao cadastrar:', error);
       setAuth(false);
       return false;
     }
@@ -46,12 +68,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const payload = { emailUser: email, passUser: senha, typeUser: FuncaoNoSistema.agricultor };
       const response = await api.post('/login', payload);
-      Alert.alert('Res', JSON.stringify(response))
       setIdUsuario(String(response.data.idUsuario));
       setAuth(true);
       return true;
     } catch (error) {
-      Alert.alert('Res', JSON.stringify(error))
+      console.error('Erro ao fazer login:', error);
       return false;
     }
   };
@@ -63,7 +84,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setAuth(true);
       return response.data;
     } catch (error) {
-      console.log('erro', error);
+      console.error('Erro ao listar culturas:', error);
       return false;
     }
   };
@@ -76,7 +97,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const response = await api.get(url);
       return response.data;
     } catch (error) {
-      console.log('erro', error);
+      console.error('Erro ao listar informações diárias:', error);
       return false;
     }
   };
@@ -89,12 +110,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const response = await api.get(url);
       return response.data;
     } catch (error) {
-      console.log('erro', error);
+      console.error('Erro ao obter evapotranspiração do dia:', error);
       return false;
     }
   };
 
-  const logout = async () => {
+  const logout = () => {
     setAuth(false);
     setIdUsuario('');
     setUser({});
