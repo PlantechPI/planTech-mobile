@@ -15,7 +15,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true,
+          "NSExceptionDomains": {
+            "yourdomain.com": {
+              "NSExceptionAllowsInsecureHTTPLoads": true,
+              "NSIncludesSubdomains": true,
+              "NSTemporaryExceptionMinimumTLSVersion": "TLSv1.0"
+            }
+          }
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -25,7 +37,10 @@
       "package": "com.gianlucasampogna.PlanTech",
       "permissions": [
         "INTERNET"
-      ]
+      ],
+      "networkSecurityConfig": {
+        "cleartextTrafficPermitted": true
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
