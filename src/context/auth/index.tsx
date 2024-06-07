@@ -1,4 +1,5 @@
-import React, { createContext, useState, ReactNode } from "react";
+import React, { createContext, useState, ReactNode, } from "react";
+import { Alert } from "react-native";
 import axios from "axios";
 import { FuncaoNoSistema } from '../../enum/FuncaoNoSistema';
 
@@ -45,10 +46,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const payload = { emailUser: email, passUser: senha, typeUser: FuncaoNoSistema.agricultor };
       const response = await api.post('/login', payload);
+      Alert.alert('Res', JSON.stringify(response))
       setIdUsuario(String(response.data.idUsuario));
       setAuth(true);
       return true;
     } catch (error) {
+      Alert.alert('Res', JSON.stringify(error))
       return false;
     }
   };
