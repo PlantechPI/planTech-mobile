@@ -100,6 +100,7 @@ const Home = () => {
         <View style={styles.parteCima}>
           <View style={styles.imageLogo}>
             <Image source={require('../../../assets/images/iconePlanThec.png')} />
+            <Text>VERSÃO MAIS ATUAL</Text>
           </View>
         </View>
         <View style={styles.parteBaixo}>

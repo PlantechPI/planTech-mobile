@@ -1,6 +1,7 @@
 import React, { createContext, useState, ReactNode } from "react";
 import axios from "axios";
 import { FuncaoNoSistema } from '../../enum/FuncaoNoSistema';
+import { Alert } from "react-native";
 
 type AuthContextType = {
   auth: boolean;
@@ -72,6 +73,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setAuth(true);
       return true;
     } catch (error) {
+      Alert.alert('Erro', JSON.stringify(error))
       console.error('Erro ao fazer login:', error);
       return false;
     }

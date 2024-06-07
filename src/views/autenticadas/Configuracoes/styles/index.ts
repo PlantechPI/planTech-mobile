@@ -4,7 +4,7 @@ import { CORES } from "../../../../enum/Cores";
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    marginTop: 28,
+    // marginTop: 28,
     // padding: 10,
     backgroundColor: CORES.background
   },
