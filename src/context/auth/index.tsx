@@ -46,7 +46,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const payload = { emailUser: email, passUser: senha, typeUser: FuncaoNoSistema.agricultor };
       const response = await api.post('/login', payload);
-      console.log(JSON.stringify(response))
+      Alert.alert('Res', JSON.stringify(response))
       setIdUsuario(String(response.data.idUsuario));
       setAuth(true);
       return true;

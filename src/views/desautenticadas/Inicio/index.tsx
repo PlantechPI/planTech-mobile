@@ -85,7 +85,7 @@ const Home = () => {
     if(!resLogin){
       limparLogin()
       closeLoginModal()
-      Alert.alert('Ops', 'As credenciais são inválidas')
+      Alert.alert('ERRO: ', 'resLogin')
     }
   }
 
