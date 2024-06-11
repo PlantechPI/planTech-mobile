@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         gap: 10
       },
       parteCima:{
-        marginTop:120
+        // marginTop:120
     },
     imageLogo:{
         flex: 1,

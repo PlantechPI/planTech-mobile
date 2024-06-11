@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     alignItems: 'center',
-    marginTop: 28
+    // marginTop: 28
     
   },
   conteudo:{
