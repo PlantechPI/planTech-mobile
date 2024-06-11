@@ -2,10 +2,7 @@ import { StyleSheet, Platform } from "react-native";
 import { CORES } from "../../../../enum/Cores";
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 28,
-  },
+
   cards: {
     flex: 1,
     flexDirection: 'row',
@@ -38,6 +35,10 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'Arial' : 'Roboto',
     fontWeight: '900', 
     color: 'black'
+  },
+  viewCards:{
+    justifyContent:'center',
+    alignItems:'center',
   }
 });
 

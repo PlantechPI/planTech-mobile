@@ -1,9 +1,11 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet, Platform, Dimensions } from "react-native";
 import { CORES } from "../../../../../../enum/Cores";
+
+const larguraDeTela = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container:{
-    width:180,
+    width:larguraDeTela/2 - 10,
     height:120,
     borderRadius:10,
     elevation:3,

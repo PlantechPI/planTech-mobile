@@ -6,6 +6,7 @@ import { useRoute } from '@react-navigation/native';
 import AuthContext from '../../../../context/auth';
 import { MaterialIcons } from '@expo/vector-icons';
 import NotFound from '../../../../components/NotFound'
+import { Skeleton } from './Skeleton';
 
 
 const HistoricoDetalhado: React.FC<{}> = ({}) => {
@@ -99,7 +100,7 @@ const HistoricoDetalhado: React.FC<{}> = ({}) => {
             
             {loading ? (
                 <View style={styles.loadingContainer}>
-                    <ActivityIndicator size={40} color="green" />
+                    <Skeleton/>
                 </View>
                 
             ) : (

@@ -8,12 +8,15 @@ import { Octicons } from '@expo/vector-icons';
 import Card from './components/Card';
 import { CORES } from '../../../enum/Cores';
 import BarChartExample from './components/Grafico';
+import { Skeleton } from './components/Skeleton';
 import Popup from '../../../components/PopUp';
 
 const StatusCultura = () => {
   const { listarInformacoesDiarias, evapoDoDia } = useContext(AuthContext);
   const [ dataAtual, setDataAtual] = useState<string>('');
   const [ dadosAtuais, setDadosAtuais] = useState<any[]>([]);
+
+  const [ carregando, setCarregando] = useState(true)
   
   const [ currentEvapo, setCurrentEvapo] = useState<number>(0);
   const [ currentFosforo, setCurrentFosforo] = useState<number>(0);
@@ -41,6 +44,7 @@ const StatusCultura = () => {
   };
 
   const recuperarDados = async() =>{
+    setCarregando(true)
     const currentData = getCurrentDate();
     setDataAtual(currentData);
     const res = await listarInformacoesDiarias(currentData);
@@ -80,11 +84,17 @@ const StatusCultura = () => {
         setTempMax(temperaturaMax);
         setTempMin(temperaturaMin);
         setUltimaAtualizacao(dadosMaisRecentes.horaDado);
+        setCarregando(false)
     }
+    console.log('CHEGUEI NO FINAL DA EXIBIÇÃO')
   }, [dadosAtuais]);
 
   return (
-    <ScrollView style={styles.container}>
+    <>
+    {carregando ? (
+      <Skeleton/>
+    ) : (
+      <ScrollView>
       <View style={styles.tituloPrincipal}>
         <View>
           <Text style={styles.titulo}> {dataAtual} - {ultimaAtualizacao} </Text>
@@ -184,8 +194,8 @@ const StatusCultura = () => {
       modal={{
         title: 'Temperatura do Solo (°C)',
         text: 'A temperatura do solo é a medida de calor no solo, influenciada pela temperatura do ar, radiação solar e umidade. É crucial para processos como germinação de sementes e atividade microbiana. Temperaturas extremas podem afetar negativamente o crescimento das plantas e a disponibilidade de nutrientes. A faixa considerada ideal é entre 20°C e 30°C. Valores fora dessa faixa não são recomendados.'
-      }}
-    />
+        }}
+        />
     <Card 
       icone={{
         nomeIcon: 'chemical-weapon', 
@@ -224,7 +234,7 @@ const StatusCultura = () => {
         title: 'Potássio (mg/kg)',
         text: 'O potássio é um nutriente essencial que ajuda na resistência das plantas a doenças, regulação da abertura dos estômatos e síntese de proteínas. Níveis adequados de potássio melhoram a qualidade dos frutos e a resistência ao estresse. Deficiências podem causar folhas amareladas e produtividade reduzida. A faixa considerada ideal é entre 100 mg/kg e 150 mg/kg. Valores fora dessa faixa não são recomendados.'
       }}
-    />
+      />
     <Card 
       icone={{
         nomeIcon: 'flask-outline', 
@@ -256,7 +266,7 @@ const StatusCultura = () => {
       </View>
 
       {visibleDadosGraficos ? (
-          <View>
+        <View>
             <BarChartExample
             qtdFosforo={currentFosforo}
             qtdNitrogenio={currentNitrogenio}
@@ -266,9 +276,12 @@ const StatusCultura = () => {
           </View>
       ) : (
         <></>
-      )}
+        )}
 
     </ScrollView>
+    )}
+  </>
+    
   );
 }
 
