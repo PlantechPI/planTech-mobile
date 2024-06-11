@@ -27,7 +27,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [id_cultura, setIdCultura] = useState('');
   const [idCoordenada, setIdCoordenada] = useState(1);
 
-  const api = axios.create({ baseURL: 'http://34.151.221.155' });
+  const api = axios.create({ baseURL: 'https://api.plantechbr.com' });
 
   const cadastrar = async (nome: string, email: string, senha: string) => {
     try {
@@ -49,6 +49,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setAuth(true);
       return true;
     } catch (error) {
+      console.log('Error', error)
       return false;
     }
   };
