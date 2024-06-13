@@ -7,6 +7,7 @@ import StatusCultura from '../views/autenticadas/StatusCultura'
 import Historico from "../views/autenticadas/Historico/listar";
 import Configuracoes from "../views/autenticadas/Configuracoes";
 import HistoricoDetalhado from '../views/autenticadas/Historico/detalhar';
+import HistoricoHoraDetalhado from '../views/autenticadas/Historico/detalharHora'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Tab = createBottomTabNavigator();
@@ -17,6 +18,7 @@ const HistoricoScreens = () =>{
         <HistoricoStack.Navigator>
             <HistoricoStack.Screen name="Historico listado" component={Historico} options={{ headerShown: false }}/>
             <HistoricoStack.Screen name="HistoricoDetalhado" component={HistoricoDetalhado} />
+            <HistoricoStack.Screen name="HistoricoHoraDetalhado" component={HistoricoHoraDetalhado} />
         </HistoricoStack.Navigator>
     )
 }

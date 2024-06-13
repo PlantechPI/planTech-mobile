@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 import { CORES } from "../../../../../enum/Cores";
 
 const { height } = Dimensions.get('window');
@@ -75,11 +75,11 @@ tituloMedia: {
   alignItems: 'center',
   justifyContent:'center'
 },
-titulo:{
-  fontWeight:'bold',
-  justifyContent:'center',
-  fontSize:22
-},
+// titulo:{
+//   fontWeight:'bold',
+//   justifyContent:'center',
+//   fontSize:22
+// },
 texto:{
   fontFamily: 'Roboto',
   fontSize: 16,
@@ -87,6 +87,43 @@ texto:{
   color: '#000',
   marginHorizontal:10
 },
+cards: {
+  flex: 1,
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+},
+titulo: {
+  fontSize: 16,
+  fontFamily: Platform.OS === 'ios' ? 'Arial' : 'Roboto',
+  fontWeight: '900', 
+  color: 'white'
+},
+tituloPrincipal: {
+  width: '100%',
+  justifyContent: 'center', 
+  alignItems: 'center', 
+  backgroundColor: CORES.verde,
+  paddingVertical:15,
+  paddingHorizontal:20,
+},
+tituloSecundario:{
+    width: '100%',
+    alignItems: 'center', 
+    backgroundColor: '#E8E8E8',
+    paddingVertical:15,
+    paddingHorizontal:20,
+    flexDirection:'row'
+},
+textTitulo:{
+  fontSize: 16,
+  fontFamily: Platform.OS === 'ios' ? 'Arial' : 'Roboto',
+  fontWeight: '900', 
+  color: 'black'
+},
+viewCards:{
+  justifyContent:'center',
+  alignItems:'center',
+}
   });
 
   export default styles

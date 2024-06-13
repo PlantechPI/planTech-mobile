@@ -93,9 +93,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const logout = async () => {
-    setAuth(false);
-    setIdUsuario('');
-    setUser({});
+    // setAuth(false)
+    // setIdUsuario('')
+    // console.log('cheguei no log dsadsa dsaout')
   };
 
   return (

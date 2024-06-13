@@ -12,12 +12,13 @@ const styles = StyleSheet.create({
         backgroundColor:'#DCE7F0',
     },
     card:{
-        width:'100%',
+        width:'48%',
         borderWidth:1,
         borderRadius:10,
         paddingHorizontal:10,
         backgroundColor:'#FFF',
         borderColor:'#e8e8e8',
+        flexDirection:'column'
     },
 })
 

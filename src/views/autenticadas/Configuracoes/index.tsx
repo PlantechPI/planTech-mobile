@@ -4,10 +4,13 @@ import styles  from './styles'
 import ButtonComponent from '../../../components/ButtonComponent';
 import { useNavigation } from '@react-navigation/native';
 import { CORES } from '../../../enum/Cores'
+import AuthContext from '../../../context/auth';
+
 
 
 const Configuracoes = () => {
     const navigation = useNavigation();
+    const { logout } = useContext(AuthContext)
     return (
       <View style={styles.container}>
         <View style={styles.tituloPrincipal}>
@@ -40,7 +43,7 @@ const Configuracoes = () => {
                   // onChangeText={(newSenha) => setNewSenha(newSenha)}
                   // value={newSenha}
                 />
-                <View style={styles.botao}>
+              <View style={styles.botao}>
                 <ButtonComponent
                   textoBtn='Alterar'
                   backGroundColor={CORES.verde}
@@ -52,6 +55,13 @@ const Configuracoes = () => {
                   textoBtn='Ativar Bomba'
                   backGroundColor={CORES.verde}
                   // onPress={cadastrarUsuario}
+                  />
+              </View>
+              <View>
+                <ButtonComponent
+                  textoBtn='Deslogar'
+                  backGroundColor={CORES.verde}
+                  onPress={logout}
                   />
               </View>
         </View>

@@ -1,32 +1,30 @@
 import React from 'react';
-import { View, Dimensions, ScrollView } from 'react-native';
+import { View, Dimensions, ScrollView, Text } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import { CORES } from '../../../../../enum/Cores';
 
-interface IGrafico{
+interface IGrafico {
   qtdNitrogenio: number,
   qtdPotassio: number,
   qtdFosforo: number,
-  qtdTempDoSolo: number
 }
 
 const screenWidth = Dimensions.get('window').width;
 
-const BarChartExample:React.FC<IGrafico> = ({ qtdNitrogenio, qtdPotassio, qtdFosforo, qtdTempDoSolo}) => {
+const BarChartExample: React.FC<IGrafico> = ({ qtdNitrogenio, qtdPotassio, qtdFosforo }) => {
 
   const data = {
-    labels: ['NITROGÊNIO', 'POTÁSSIO', 'FÓSFORO', 'TEMP SOLO'],
+    labels: ['NITROGÊNIO', 'POTÁSSIO', 'FÓSFORO'],
     datasets: [
       {
         data: [
           qtdNitrogenio ? qtdNitrogenio : 0,
           qtdPotassio ? qtdPotassio : 0,
-          qtdFosforo ? qtdFosforo : 0,
-          qtdTempDoSolo ? qtdTempDoSolo : 0],
+          qtdFosforo ? qtdFosforo : 0],
       },
     ],
   };
-  
+
   const chartConfig = {
     backgroundGradientFrom: '#FFF',
     backgroundGradientFromOpacity: 4,
@@ -34,35 +32,36 @@ const BarChartExample:React.FC<IGrafico> = ({ qtdNitrogenio, qtdPotassio, qtdFos
     backgroundGradientToOpacity: 0.5,
     color: (opacity = 0) => CORES.verde,
     strokeWidth: 3, // optional, default 3
-    // barRadius: 20,
     barPercentage: 1,
     useShadowColorFromDataset: false, // optional
     propsForBackgroundLines: {
-      stroke: '#E3E3E3', // Cor das linhas de fundo
-      strokeDasharray: '', // Padrão sólido
-      strokeWidth: 1, // Largura das linhas de fundo
-      opacity: 1, // Opacidade das linhas de fundo
+      stroke: '#E3E3E3',
+      strokeDasharray: '',
+      strokeWidth: 1,
+      opacity: 1,
     },
     propsForLabels: {
-      fontSize: 12, // Tamanho da fonte dos rótulos
-      fill: CORES.verde, // Cor dos rótulos
-      fontFamily: 'Arial', // Família da fonte dos rótulos
-      fontWeight: 'bold', // Peso da fonte dos rótulos
-      textAnchor: 'middle', // Ponto de ancoragem do texto
+      fontSize: 12,
+      fill: CORES.verde,
+      fontFamily: 'Arial',
+      fontWeight: 'bold',
+      textAnchor: 'middle',
     },
     propsForHorizontalLabels: {
-      fontSize: 12, // Tamanho da fonte dos rótulos horizontais
-      fill: CORES.primaria, // Cor dos rótulos horizontais
-      fontFamily: 'Arial', // Família da fonte dos rótulos horizontais
-      fontWeight: 'normal', // Peso da fonte dos rótulos horizontais
-      textAnchor: 'end', // Ponto de ancoragem do texto dos rótulos horizontais
+      fontSize: 12,
+      fill: CORES.primaria,
+      fontFamily: 'Arial',
+      fontWeight: 'normal',
+      textAnchor: 'end',
     },
   };
 
-  
   return (
     <ScrollView>
       <View>
+        <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginVertical: 10 }}>
+          Situação Atual da Química do Solo
+        </Text>
         <BarChart
           style={{
             // marginVertical: 8,
@@ -75,8 +74,8 @@ const BarChartExample:React.FC<IGrafico> = ({ qtdNitrogenio, qtdPotassio, qtdFos
           yAxisSuffix=""
           chartConfig={chartConfig}
           verticalLabelRotation={0}
-          fromZero={true}  // Adicionado para começar do 0
-          yAxisInterval={1}  // Intervalo no eixo Y
+          fromZero={true}
+          yAxisInterval={1}
           withInnerLines={false}
           showBarTops={true}
           showValuesOnTopOfBars={true}

@@ -99,6 +99,7 @@ const SkeletonCards:React.FC<SkeletonCardsProps> = ({
                 height: heightSegundaListra? heightSegundaListra : heightListra || 20,
                 borderRadius: borderRadius || 0,
                 marginBottom: marginBottonListraSecundaria,
+                flexDirection:'row'
               } as ViewStyle]}
             >
               <Animated.View style={{
@@ -108,6 +109,7 @@ const SkeletonCards:React.FC<SkeletonCardsProps> = ({
                 backgroundColor: '#fff',
                 transform: [{ translateX: translateX }]
               }}></Animated.View>
+              
             </View>
           );
         }

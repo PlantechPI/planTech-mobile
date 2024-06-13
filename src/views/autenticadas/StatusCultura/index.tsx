@@ -10,6 +10,7 @@ import { CORES } from '../../../enum/Cores';
 import BarChartExample from './components/Grafico';
 import { Skeleton } from './components/Skeleton';
 import Popup from '../../../components/PopUp';
+import LineChartExemple from './components/GraficoLinha';
 
 const StatusCultura = () => {
   const { listarInformacoesDiarias, evapoDoDia } = useContext(AuthContext);
@@ -86,7 +87,6 @@ const StatusCultura = () => {
         setUltimaAtualizacao(dadosMaisRecentes.horaDado);
         setCarregando(false)
     }
-    console.log('CHEGUEI NO FINAL DA EXIBIÇÃO')
   }, [dadosAtuais]);
 
   return (
@@ -116,7 +116,7 @@ const StatusCultura = () => {
             <Card 
               icone={{nomeIcon: 'thermometer', directory:'MaterialCommunityIcons'}}
               label={'TEMPERATURA ATUAL'} 
-              informacao={String(currentTemp)}
+              informacao={String(currentTemp).concat(' °C')}
               modal={{
                 title: 'Temperatura Atual (°C)',
                 text: 'A temperatura atual refere-se à leitura da temperatura do ar em um momento específico, no caso medida em graus Celsius (°C). Esta medida é crucial para diversos aspectos da vida cotidiana, incluindo agricultura, saúde, planejamento urbano e atividades ao ar livre. No contexto agrícola, a temperatura atual é um indicador vital que influencia diretamente o crescimento e desenvolvimento das plantas.'
@@ -125,7 +125,7 @@ const StatusCultura = () => {
             <Card 
               icone={{nomeIcon: 'weather-pouring', directory:'MaterialCommunityIcons'}}
               label={'PRECIPITAÇÃO DO DIA'} 
-              informacao={String(precipitacaoTotal)}
+              informacao={String(precipitacaoTotal).concat(' mm')}
               modal={{
                 title: 'Precipitação do Dia (mm)',
                 text: 'A precipitação refere-se à quantidade de chuva ou neve que caiu em um período específico. É medida em milímetros (mm). Na agricultura, a precipitação é vital para a irrigação natural das plantas. Quantidades adequadas de precipitação são essenciais para o crescimento saudável das plantas, mas o excesso pode causar encharcamento e doenças.'
@@ -134,7 +134,7 @@ const StatusCultura = () => {
             <Card 
               icone={{nomeIcon: 'thermometer-chevron-up', directory:'MaterialCommunityIcons'}}
               label={'TEMPERATURA MÁXIMA'} 
-              informacao={String(tempMax)}
+              informacao={String(tempMax).concat(' °C')}
               modal={{
                 title: 'Temperatura Máxima (°C)',
                 text: 'A temperatura máxima é a leitura mais alta da temperatura do ar durante o dia. Este dado é importante para a agricultura, pois temperaturas muito altas podem causar estresse térmico nas plantas, afetando negativamente seu crescimento e produtividade. Monitorar a temperatura máxima ajuda a adotar medidas de proteção, como sombreamento e irrigação.'
@@ -143,7 +143,7 @@ const StatusCultura = () => {
             <Card 
               icone={{nomeIcon: 'thermometer-chevron-down', directory:'MaterialCommunityIcons'}}
               label={'TEMPERATURA MÍNIMA'} 
-              informacao={String(tempMin)}
+              informacao={String(tempMin).concat(' °C')}
               modal={{
                 title: 'Temperatura Mínima (°C)',
                 text: 'A temperatura mínima é a leitura mais baixa da temperatura do ar durante o dia. Este dado é crucial para identificar períodos de frio que podem danificar culturas sensíveis ou retardar o crescimento. Monitorar a temperatura mínima ajuda a planejar ações como coberturas e aquecimento para proteger as plantas.'
@@ -152,7 +152,7 @@ const StatusCultura = () => {
             <Card 
               icone={{nomeIcon: 'pine-tree-fire', directory:'MaterialCommunityIcons'}}
               label={'EVAPOTRANSPIRAÇÃO'} 
-              informacao={String(currentEvapo)}
+              informacao={String(currentEvapo).concat(' mm')}
               modal={{
                 title: 'Evapotranspiração (mm)',
                 text: 'A evapotranspiração (ET) é a soma da evaporação da água do solo e a transpiração das plantas. É medida em milímetros (mm). Este processo é essencial para o ciclo da água na agricultura. Altas taxas de ET indicam maior necessidade de irrigação, enquanto baixas taxas podem significar menor demanda hídrica das plantas.'
@@ -161,7 +161,7 @@ const StatusCultura = () => {
             <Card 
               icone={{nomeIcon: 'air', directory:'MaterialIcons'}}
               label={'UMIDADE DO AR'} 
-              informacao={String(currentUmidadeAr)}
+              informacao={String(currentUmidadeAr).concat(' %')}
               modal={{
                 title: 'Umidade do Ar (%)',
                 text: 'A umidade do ar é a quantidade de vapor de água presente no ar, expressa em porcentagem (%). Na agricultura, a umidade do ar afeta a transpiração das plantas e a evaporação do solo. Níveis ótimos de umidade ajudam a manter o equilíbrio hídrico das plantas, enquanto níveis extremos podem causar estresse hídrico ou favorecer doenças.'
@@ -190,7 +190,7 @@ const StatusCultura = () => {
         color: currentTempSolo > 20 && currentTempSolo < 30 ? CORES.verdeClaro : 'red'
       }}
       label={'TEMPERATURA DO SOLO'} 
-      informacao={String(currentTempSolo)}
+      informacao={String(currentTempSolo).concat(' °C')}
       modal={{
         title: 'Temperatura do Solo (°C)',
         text: 'A temperatura do solo é a medida de calor no solo, influenciada pela temperatura do ar, radiação solar e umidade. É crucial para processos como germinação de sementes e atividade microbiana. Temperaturas extremas podem afetar negativamente o crescimento das plantas e a disponibilidade de nutrientes. A faixa considerada ideal é entre 20°C e 30°C. Valores fora dessa faixa não são recomendados.'
@@ -203,7 +203,7 @@ const StatusCultura = () => {
         color: currentNitrogenio > 15 && currentNitrogenio < 40 ? CORES.verdeClaro : 'red'
       }}
       label={'NITROGÊNIO'} 
-      informacao={String(currentNitrogenio)}
+      informacao={String(currentNitrogenio).concat(' mg/kg')}
       modal={{
         title: 'Nitrogênio (mg/kg)',
         text: 'O nitrogênio é um nutriente essencial para o crescimento das plantas, vital para a formação de proteínas e clorofila. Níveis adequados de nitrogênio promovem um crescimento vigoroso e produtivo, enquanto deficiências podem causar folhas amareladas e baixo rendimento. A faixa considerada ideal é entre 15 mg/kg e 40 mg/kg. Valores fora dessa faixa não são recomendados.'
@@ -216,7 +216,7 @@ const StatusCultura = () => {
         color: currentUmidadeSolo > 90 || currentUmidadeSolo < 50 ? 'red' : CORES.verdeClaro 
       }}
       label={'UMIDADE DO SOLO'} 
-      informacao={String(currentUmidadeSolo)}
+      informacao={String(currentUmidadeSolo).concat(' %')}
       modal={{
         title: 'Umidade do Solo (%)',
         text: 'A umidade do solo é a quantidade de água presente no solo, vital para o crescimento das plantas. Ela influencia a absorção de nutrientes e o desenvolvimento das raízes. Níveis inadequados de umidade podem causar estresse hídrico, afetando negativamente o crescimento e a saúde das plantas. A faixa considerada ideal é entre 50% e 90%. Valores fora dessa faixa não são recomendados.'
@@ -229,7 +229,7 @@ const StatusCultura = () => {
         color: currentPotassio > 100 && currentPotassio < 150 ? CORES.verdeClaro : 'red'
       }}
       label={'POTÁSSIO'} 
-      informacao={String(currentPotassio)}
+      informacao={String(currentPotassio).concat(' mg/kg')}
       modal={{
         title: 'Potássio (mg/kg)',
         text: 'O potássio é um nutriente essencial que ajuda na resistência das plantas a doenças, regulação da abertura dos estômatos e síntese de proteínas. Níveis adequados de potássio melhoram a qualidade dos frutos e a resistência ao estresse. Deficiências podem causar folhas amareladas e produtividade reduzida. A faixa considerada ideal é entre 100 mg/kg e 150 mg/kg. Valores fora dessa faixa não são recomendados.'
@@ -242,7 +242,7 @@ const StatusCultura = () => {
         color: currentFosforo > 15 && currentFosforo < 50 ? CORES.verdeClaro : 'red'
       }}
       label={'FÓSFORO'} 
-      informacao={String(currentFosforo)}
+      informacao={String(currentFosforo).concat(' mg/kg')}
       modal={{
         title: 'Fósforo (mg/kg)',
         text: 'O fósforo é crucial para o desenvolvimento das raízes e a floração das plantas. Ele ajuda na transferência de energia e na formação de sementes e frutos. Níveis adequados de fósforo promovem um crescimento saudável e uma colheita abundante, enquanto deficiências podem resultar em crescimento atrofiado e baixo rendimento. A faixa considerada ideal é entre 15 mg/kg e 50 mg/kg. Valores fora dessa faixa não são recomendados.'
@@ -266,14 +266,19 @@ const StatusCultura = () => {
       </View>
 
       {visibleDadosGraficos ? (
+        <>
         <View>
-            <BarChartExample
+          <LineChartExemple/>
+        </View>
+          <View>
+          <BarChartExample
             qtdFosforo={currentFosforo}
             qtdNitrogenio={currentNitrogenio}
             qtdPotassio={currentPotassio}
-            qtdTempDoSolo={currentTempSolo}
+            // qtdTempDoSolo={currentTempSolo}
             />
           </View>
+          </>
       ) : (
         <></>
         )}

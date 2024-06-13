@@ -12,7 +12,7 @@ export default function StackRoutes() {
 
     const authContext = useContext(AuthContext);
 
-    const auth = authContext ? authContext.auth : false;
+    const auth = authContext.auth;
 
     return (
       <Stack.Navigator>
