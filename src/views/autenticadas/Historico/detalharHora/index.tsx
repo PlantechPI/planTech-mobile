@@ -24,8 +24,6 @@ const DetalharHora: React.FC = () => {
   const route = useRoute();
   const { data } = route.params as IDetalharHora;
 
-  console.log('data', data);
-
   return (
     <ScrollView>
         <View style={styles.tituloPrincipal}>

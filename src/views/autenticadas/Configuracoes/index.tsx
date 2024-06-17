@@ -5,66 +5,34 @@ import ButtonComponent from '../../../components/ButtonComponent';
 import { useNavigation } from '@react-navigation/native';
 import { CORES } from '../../../enum/Cores'
 import AuthContext from '../../../context/auth';
+import TextInputComponent from '../../../components/TextInputIcon'
 
 
 
 const Configuracoes = () => {
     const navigation = useNavigation();
     const { logout } = useContext(AuthContext)
+
+    const [potassio, setPotassio] = useState()
     return (
       <View style={styles.container}>
         <View style={styles.tituloPrincipal}>
           <View>
-            <Text style={styles.titulo}>MEU PERFIL</Text>
+            <Text style={styles.titulo}>IRRIGAÇÃO</Text>
           </View>
         </View>
         <View style={styles.formView}>
-                <Text style={styles.textoh1}>Nome</Text>
-                <TextInput
-                  style={styles.btnInput}
-                  placeholder="Nome"
-                  // onChangeText={(newNome) => setNewNome(newNome)}
-                  // value={newNome}
-                />
 
-                <Text style={styles.textoh1}>Email</Text>
-                <TextInput
-                  style={styles.btnInput}
-                  placeholder="Email"
-                  // onChangeText={(newEmail) => setNewEmail(newEmail)}
-                  // value={newEmail}
-                />
+        <TextInputComponent 
+        state={potassio}
+        setState={setPotassio}
+        text='POTÁSSIO'
+        placeholder='Digite um valor'
+        />
 
-                <Text style={styles.textoh1}>Senha</Text>
-                <TextInput
-                  style={styles.btnInput}
-                  placeholder="Senha"
-                  secureTextEntry={true}
-                  // onChangeText={(newSenha) => setNewSenha(newSenha)}
-                  // value={newSenha}
-                />
-              <View style={styles.botao}>
-                <ButtonComponent
-                  textoBtn='Alterar'
-                  backGroundColor={CORES.verde}
-                  // onPress={cadastrarUsuario}
-                  />
-              </View>
-              <View>
-                <ButtonComponent
-                  textoBtn='Ativar Bomba'
-                  backGroundColor={CORES.verde}
-                  // onPress={cadastrarUsuario}
-                  />
-              </View>
-              <View>
-                <ButtonComponent
-                  textoBtn='Deslogar'
-                  backGroundColor={CORES.verde}
-                  onPress={logout}
-                  />
-              </View>
         </View>
+
+
 
             </View>
 

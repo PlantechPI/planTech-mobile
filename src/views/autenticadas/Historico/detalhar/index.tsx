@@ -9,6 +9,7 @@ import { Skeleton } from '../../StatusCultura/components/Skeleton';
 import Card from './components/Card';
 import { CORES } from '../../../../enum/Cores';
 import  CardTelaToda from './components/CardTelaToda'
+import GraficoDeLinha from './components/GraficoLinha'
 
 const HistoricoDetalhado: React.FC = () => {
     const { listarInformacoesDiarias, evapoDoDia } = useContext(AuthContext);
@@ -18,6 +19,9 @@ const HistoricoDetalhado: React.FC = () => {
     const [logs, setLogs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [existeDado, setExisteDado] = useState(true);
+
+    const [tempMaxData, setTempMaxData] = useState<number[]>([]);
+    const [tempMinData, setTempMinData] = useState<number[]>([]);
 
     const [mediaFosforo, setMediaFosforo] = useState<number>(0);
     const [mediaNitrogenio, setMediaNitrogenio] = useState<number>(0);
@@ -29,8 +33,9 @@ const HistoricoDetalhado: React.FC = () => {
     const [tempMax, setTempMax] = useState<number>(0);
     const [tempMin, setTempMin] = useState<number>(0);
     const [evapo, setEvapo] = useState<number>(0);
-    const [visibleDadosGerais, setVisibleDadosGerais] = useState<boolean>(true);
-    const [visibleLogs, setVisibleLogs] = useState<boolean>(true);
+    const [visibleDadosGerais, setVisibleDadosGerais] = useState(true);
+    const [visibleLogs, setVisibleLogs] = useState(true);
+    const [visibilidadeGraficos, setVisibleDadosGraficos] = useState(true);
 
     const data = route.params?.data;
 
@@ -62,7 +67,7 @@ const HistoricoDetalhado: React.FC = () => {
             let temperaturaMax = 0;
             let temperaturaMin = 300;
 
-            logs.forEach((item) => {
+            logs.forEach((item: any) => {
                 totalFosforo += item.fosforoSolo;
                 totalNitrogenio += item.nitrogenioSolo;
                 totalPotassio += item.potassioSolo;
@@ -105,6 +110,42 @@ const HistoricoDetalhado: React.FC = () => {
             return 'horizon';
         }
       }; 
+
+      useEffect(() => {
+        if (logs.length > 0) {
+          let tempMaxArray: number[] = [];
+          let tempMinArray: number[] = [];
+          let tempMaxFiltered: number[] = [];
+          let tempMinFiltered: number[] = [];
+          let labelsFiltered: string[] = [];
+    
+          // Filtra os dados a cada 2 horas
+          logs.forEach((item: any) => {
+            tempMaxFiltered.push(item.tempMax);
+            tempMinFiltered.push(item.tempMin);
+            labelsFiltered.push(item.horaDado);
+          });
+    
+          setTempMaxData(tempMaxFiltered);
+          setTempMinData(tempMinFiltered);
+    
+          // Ajuste a estrutura do objeto data
+          const data = {
+            labels: labelsFiltered,
+            datasets: [
+              {
+                data: tempMaxFiltered,
+                color: (opacity = 1) => `rgba(255, 0, 0, ${opacity})`, // cor da linha de temperatura máxima
+                strokeWidth: 2,
+              },
+            ],
+            // legend: ['Temp. Máxima', 'Temp. Mínima'], // legenda
+          };
+          
+          // Atualiza o estado dos dados
+        //   setData(data);
+        }
+      }, [logs]);
 
     return (
         existeDado ? (
@@ -250,8 +291,34 @@ const HistoricoDetalhado: React.FC = () => {
                                 />     
 
                             </>
-                            
-                            
+                        )}
+                        <View style={styles.tituloSecundario}>
+                            <View style={{ width: '90%' }}>
+                                <Text style={styles.textTitulo}> GRÁFICOS </Text>
+                        </View>
+                            <View style={{ width: '10%' }}>
+                                <TouchableOpacity onPress={() => setVisibleDadosGraficos((prevState) => (!prevState))}>
+                                    <Text style={styles.textTitulo}>
+                                        {visibilidadeGraficos ? <Octicons name='chevron-down' size={26} /> : <Octicons name='chevron-up' size={26} />}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        {visibilidadeGraficos && (
+                            <View>
+                                <GraficoDeLinha 
+                                    data={{
+                                        labels: logs.map((log: any) => (log.horaDado)),
+                                        datasets: [
+                                            {
+                                                data: tempMaxData,
+                                                color: () => 'blue',
+                                                strokeWidth: 2,
+                                            },
+                                        ],
+                                    }}
+                                />
+                            </View>
                         )}
 
                         <View style={styles.tituloSecundario}>
