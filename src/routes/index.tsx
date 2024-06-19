@@ -12,8 +12,7 @@ export default function Routes() {
 
     return (
         <NavigationContainer>
-            {id_cultura == '' ? <StackRoutes /> : <TabRoutes />}
-            {/* <TabRoutes /> */}
+            <StackRoutes /> 
         </NavigationContainer>
     );
 }

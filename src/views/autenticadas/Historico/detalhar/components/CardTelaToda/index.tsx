@@ -24,7 +24,7 @@ const CardTotal: React.FC<ICardStatusCultura> = ({ informacao, icone, label, dat
 
   const detalharHistoricoDiaHorario = () => {
     console.log('state: ', data)
-    navigation.navigate('HistoricoHoraDetalhado', { data });
+    navigation.navigate('Detalhar horário', { data });
   };
 
   useEffect(() => {

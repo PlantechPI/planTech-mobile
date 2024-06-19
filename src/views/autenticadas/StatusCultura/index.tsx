@@ -167,22 +167,8 @@ const StatusCultura = () => {
                 text: 'A umidade do ar é a quantidade de vapor de água presente no ar, expressa em porcentagem (%). Na agricultura, a umidade do ar afeta a transpiração das plantas e a evaporação do solo. Níveis ótimos de umidade ajudam a manter o equilíbrio hídrico das plantas, enquanto níveis extremos podem causar estresse hídrico ou favorecer doenças.'
               }}
             /> 
-          </>
-        ) : null}
 
-        <View style={styles.tituloSecundario}>
-          <View style={{width:'90%'}}>
-            <Text style={styles.textTitulo}> DADOS DO SOLO </Text>
-          </View>
-          <View style={{width:'10%'}}>
-            <TouchableOpacity onPress={() => setVisibleDadosDoSolo((prevState) => (!prevState))}>
-              <Text style={styles.textTitulo}> {visibleDadosDoSolo ? <Octicons name='chevron-down' size={26}/> : <Octicons name='chevron-up' size={26}/>} </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {visibleDadosDoSolo ? (
-  <>
+<>
     <Card 
       icone={{
         nomeIcon: 'elevation-decline',
@@ -249,7 +235,9 @@ const StatusCultura = () => {
       }}
     />         
   </>
-) : null}
+          </>
+        ) : null}
+
 
 
       </View>

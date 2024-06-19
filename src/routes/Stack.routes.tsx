@@ -5,6 +5,7 @@ import Configuracoes from '../views/autenticadas/Configuracoes'
 import ListarCulturas from '../views/autenticadas/ListarCulturas'
 import { useContext } from "react";
 import { AuthContext } from '../context/auth'
+import TabRoutes from './Tab.routes';
 
 export default function StackRoutes() {
 
@@ -19,7 +20,7 @@ export default function StackRoutes() {
           {auth ? (
             <React.Fragment>
               <Stack.Screen name="ListarCulturas" component={ListarCulturas} options={{headerShown:true}}/>
-              <Stack.Screen name="Configuracoes" component={Configuracoes} options={{headerShown:true}}/>
+              <Stack.Screen name="MainTabs" component={TabRoutes} options={{headerShown:false}}/>
             </React.Fragment>
           ) : (
             <React.Fragment>

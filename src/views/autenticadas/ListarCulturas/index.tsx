@@ -29,21 +29,26 @@ const ListarCulturas = () => {
 
 
     return (
-      <View style={styles.container}>
-      {/* Metade inferior com a cor de fundo */}
-      <View style={styles.halfBackground} />
-      <View style={styles.contentContainer}>
-        {culturas.map((element: any, index: number) => (
-          <CardCultura
-            key={index} // Adicione uma chave única para cada componente na iteração
-            nomeCultura={`CULTURA ${index+1}`}
-            nomeTipoCultura={element.nomeCultura}
-            local='Vitória, Espírito Santo'
-            id_cultura_atual={element.idCultura}
-          />
-        ))}
-      </View>
-    </View>
+        
+        <View style={styles.container}>
+
+            <ImageBackground 
+            source={require('../../../assets/images/imgTeste.jpg')} 
+            style={styles.containerBackGround}
+            resizeMode='cover'>
+        <View style={styles.contentContainer}>
+            {culturas.map((element: any, index: number) => (
+                <CardCultura
+                key={index} // Adicione uma chave única para cada componente na iteração
+                nomeCultura={`CULTURA ${index+1}`}
+                nomeTipoCultura={element.nomeCultura}
+                local='Vitória, Espírito Santo'
+                id_cultura_atual={element.idCultura}
+                />
+                ))}
+        </View>
+    </ImageBackground>
+        </View>
     );
 }
 export default ListarCulturas

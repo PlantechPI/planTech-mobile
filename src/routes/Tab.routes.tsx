@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AntDesign, FontAwesome, MaterialIcons, FontAwesome6, Ionicons } from '@expo/vector-icons'
+import { AntDesign, FontAwesome, MaterialIcons, Feather, Ionicons } from '@expo/vector-icons'
 import { CORES } from "../enum/Cores";
 import { Animated, Text } from 'react-native'; // Importando Animated e Text
 import StatusCultura from '../views/autenticadas/StatusCultura'
@@ -17,8 +17,8 @@ const HistoricoScreens = () =>{
     return(
         <HistoricoStack.Navigator>
             <HistoricoStack.Screen name="Historico listado" component={Historico} options={{ headerShown: false }}/>
-            <HistoricoStack.Screen name="HistoricoDetalhado" component={HistoricoDetalhado} />
-            <HistoricoStack.Screen name="HistoricoHoraDetalhado" component={HistoricoHoraDetalhado} />
+            <HistoricoStack.Screen name="Detalhes do histórico" component={HistoricoDetalhado} />
+            <HistoricoStack.Screen name="Detalhar horário" component={HistoricoHoraDetalhado} />
         </HistoricoStack.Navigator>
     )
 }
@@ -73,12 +73,12 @@ export default function TabRoutes(){
             <Tab.Screen
                 name="Configuracoes"
                 component={Configuracoes}
-                initialParams={{ title: 'Configurações' }} // Definindo os parâmetros iniciais para esta rota
+                initialParams={{ title: 'Irrigação' }} // Definindo os parâmetros iniciais para esta rota
                 options={{
                     tabBarActiveTintColor: 'black',
                     tabBarIcon: ({ focused }) => (
                         <Animated.View style={{ transform: [{ scale: focused ? new Animated.Value(1.3) : new Animated.Value(1) }] }}>
-                            <AntDesign name="setting" size={24} color='#000' />
+                            <Feather name="cloud-drizzle" size={24} color='#000' />
                         </Animated.View>
                     ),
                 }}

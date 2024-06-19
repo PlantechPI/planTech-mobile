@@ -7,10 +7,11 @@ const styles = StyleSheet.create({
         width: '100%',
         borderColor: 'black',
         padding: 10,
-        borderRadius: 5,
-        elevation: 5,
+        borderRadius: 2,
+        elevation: 20,
         backgroundColor: CORES.background,
-        gap: 5
+        gap: 5,
+        borderBlockColor: 'black'
         
     },
     textoh1:{
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
         color: CORES.background,
     },
     container: {
-        height:120,
+        height:160,
         width: '85%',
         marginTop: 50,
       },
