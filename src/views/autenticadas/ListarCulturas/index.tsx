@@ -33,7 +33,7 @@ const ListarCulturas = () => {
         <View style={styles.container}>
 
             <ImageBackground 
-            source={require('../../../assets/images/imgTeste.jpg')} 
+            source={require('../../../assets/images/image (1).png')} 
             style={styles.containerBackGround}
             resizeMode='cover'>
         <View style={styles.contentContainer}>

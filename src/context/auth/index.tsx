@@ -16,6 +16,8 @@ type AuthContextType = {
   setIdCultura: React.Dispatch<React.SetStateAction<string>>;
   listarInformacoesDiarias: (dataString: string) => Promise<any>;
   evapoDoDia: (dataString: string) => Promise<any>;
+  getDadosIrrigacao: (dataString: string) => Promise<any>;
+  irrigar: () => Promise<any>;
 };
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -92,14 +94,41 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+  const getDadosIrrigacao = async (dataString: string) => {
+    try {
+      const [dia, mes, ano] = dataString.split('/');
+      const data_atual = `${ano}-${mes}-${dia}`;
+      const url = `/irrigacao/${data_atual}`;
+      const response = await api.get(url);
+      return response.data;
+    } catch (error) {
+      console.log('erro', error);
+      return false;
+    }
+  };
+
+  const irrigar = async () => {
+    try {
+      const response = await api.post('/irrigar');
+      return response.data;
+    } catch (error) {
+      console.log('erro', error);
+      return false;
+    }
+  };
+
   const logout = async () => {
-    // setAuth(false)
-    // setIdUsuario('')
-    // console.log('cheguei no log dsadsa dsaout')
+    setAuth(false);
+    setIdUsuario('');
+    console.log('Logged out successfully');
   };
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, id_Usuario, setIdUsuario, cadastrar, login, logout, user, listarCulturas, id_cultura, setIdCultura, listarInformacoesDiarias, evapoDoDia }}>
+    <AuthContext.Provider value={{
+      auth, setAuth, id_Usuario, setIdUsuario, cadastrar, login, logout,
+      user, listarCulturas, id_cultura, setIdCultura, listarInformacoesDiarias,
+      evapoDoDia, getDadosIrrigacao, irrigar
+    }}>
       {children}
     </AuthContext.Provider>
   );
