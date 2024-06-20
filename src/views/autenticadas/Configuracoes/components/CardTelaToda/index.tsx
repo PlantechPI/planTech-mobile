@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons, MaterialIcons, Fontisto, Ionicons, Entypo } from '@expo/vector-icons';
 import { CORES } from '../../../../../enum/Cores';
+import ButtonComponent from '../../../../../components/ButtonComponent';
 
 interface ICardStatusCultura {
   informacao: string;
@@ -13,10 +14,16 @@ interface ICardStatusCultura {
     color?: string;
   };
   label?: string;
+  modal?: {
+    title?: string,
+    text?: string,
+
+  }
 }
 
-const CardTotal: React.FC<ICardStatusCultura> = ({ informacao, icone, label }) => {
+const CardTotal: React.FC<ICardStatusCultura> = ({ informacao, icone, label, modal }) => {
   const [icon, setIcon] = useState<JSX.Element | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -55,7 +62,8 @@ const CardTotal: React.FC<ICardStatusCultura> = ({ informacao, icone, label }) =
   }, [icone]);
 
   return (
-    <TouchableOpacity onPress={() => null}>
+    <>
+    <TouchableOpacity onPress={() => setIsVisible(true)}>
       <View style={styles.container}>
         <View style={styles.box}>
           <View style={styles.icone}>
@@ -68,6 +76,23 @@ const CardTotal: React.FC<ICardStatusCultura> = ({ informacao, icone, label }) =
         </View>
       </View>
     </TouchableOpacity>
+    <Modal
+          animationType="fade"
+          transparent={true}
+          visible={isVisible}
+          onRequestClose={() => setIsVisible(false)}
+          >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalTitle}>{modal?.title}</Text>
+              <Text>{modal?.text}</Text>
+              <TouchableOpacity onPress={() => setIsVisible(false)}>
+                <Text style={styles.closeButton}>Fechar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+    </>
   );
 };
 

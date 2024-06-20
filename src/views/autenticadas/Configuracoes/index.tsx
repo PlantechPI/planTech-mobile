@@ -1,20 +1,20 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, Alert, ScrollView } from 'react-native';
+import { View, Text, Alert, ScrollView, Modal, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import ButtonComponent from '../../../components/ButtonComponent';
 import { useNavigation } from '@react-navigation/native';
 import { CORES } from '../../../enum/Cores';
 import AuthContext from '../../../context/auth';
-import TextInputComponent from '../../../components/TextInputIcon';
-import CardTotal from './components/CardTelaToda'; // Adjust the import path if necessary
+import CardTotal from './components/CardTelaToda'; // Ajuste o caminho de importação se necessário
+import { Skeleton } from './components/Skeleton';
 
 const Configuracoes = () => {
   const navigation = useNavigation();
   const { getDadosIrrigacao, irrigar } = useContext(AuthContext);
 
   const [carregando, setCarregando] = useState(true);
-  const [potassio, setPotassio] = useState<string>('');
   const [dadosIrrigacao, setDadosIrrigacao] = useState<any>(null);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
 
   const handleGetDadosIrrigacao = async () => {
     try {
@@ -32,9 +32,18 @@ const Configuracoes = () => {
     try {
       const response = await irrigar();
       Alert.alert('Irrigação', 'Irrigação realizada com sucesso.');
+      setIsConfirmVisible(false);
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível realizar a irrigação.');
     }
+  };
+
+  const openConfirmModal = () => {
+    setIsConfirmVisible(true);
+  };
+
+  const closeConfirmModal = () => {
+    setIsConfirmVisible(false);
   };
 
   useEffect(() => {
@@ -54,43 +63,89 @@ const Configuracoes = () => {
             informacao={String(dadosIrrigacao.dias_fosforo)}
             icone={{ nomeIcon: 'abacus', directory: 'MaterialCommunityIcons' }}
             label="Dias Fósforo"
+            modal={{
+              title: "Dias do Ciclo de Fósforo",
+              text: "Este card representa o número de dias desde o último ciclo de fósforo. O fósforo é essencial para a transferência de energia e fotossíntese das plantas. Manter um nível ótimo de fósforo garante um crescimento robusto e desenvolvimento das plantas."
+            }}
           />
           <CardTotal
             informacao={String(dadosIrrigacao.dias_nitrogenio)}
             icone={{ nomeIcon: 'barley', directory: 'MaterialCommunityIcons' }}
             label="Dias Nitrogênio"
+            modal={{
+              title: "Dias do Ciclo de Nitrogênio",
+              text: "Este card exibe o número de dias desde o último ciclo de nitrogênio. O nitrogênio é um componente crítico para o crescimento das plantas, pois é uma parte importante da clorofila, o composto que as plantas usam na fotossíntese. Ciclos regulares de nitrogênio ajudam a promover uma folhagem saudável nas plantas."
+            }}
           />
           <CardTotal
             informacao={String(dadosIrrigacao.dias_potassio)}
             icone={{ nomeIcon: 'fire', directory: 'Fontisto' }}
             label="Dias Potássio"
+            modal={{
+              title: "Dias do Ciclo de Potássio",
+              text: "Este card indica o número de dias desde o último ciclo de potássio. O potássio regula o crescimento das plantas e é crucial para a absorção de água e ativação de enzimas. Garantir ciclos regulares de potássio ajuda as plantas a suportarem o estresse e a melhorar a qualidade da produção."
+            }}
           />
           <CardTotal
             informacao={String(dadosIrrigacao.media_umidade)}
             icone={{ nomeIcon: 'beer-outline', directory: 'MaterialCommunityIcons' }}
             label="Média Umidade"
+            modal={{
+              title: "Média da Umidade do Solo",
+              text: "Este card mostra o nível médio de umidade do solo. A umidade adequada do solo é vital para a absorção de nutrientes e a saúde das plantas. Monitorar e manter níveis ótimos de umidade previnem o estresse por seca e garantem um ambiente de crescimento saudável para as plantas."
+            }}
           />
           <CardTotal
             informacao={String(dadosIrrigacao.necessidade_agua)}
             icone={{ nomeIcon: 'water-percent', directory: 'MaterialCommunityIcons' }}
             label="Necessidade Água"
+            modal={{
+              title: "Necessidade de Água",
+              text: "Este card detalha a necessidade atual de água para suas culturas. Compreender as necessidades hídricas ajuda na irrigação eficiente, prevenindo tanto a sub-irrigação quanto a irrigação excessiva, promovendo assim o uso sustentável da água e o crescimento ideal das culturas."
+            }}
           />
           <CardTotal
             informacao={String(dadosIrrigacao.npk)}
             icone={{ nomeIcon: 'chart-bar', directory: 'MaterialCommunityIcons' }}
-            label="NPK"
+            label="Necessidade de NPK"
+            modal={{
+              title: "Necessidade de NPK",
+              text: "Este card fornece a necessidade atual de NPK (Nitrogênio, Fósforo e Potássio). Níveis equilibrados de NPK são cruciais para a nutrição e o crescimento das plantas. O monitoramento regular garante que suas plantas recebam os nutrientes certos para um desenvolvimento saudável e produtivo."
+            }}
           />
-          <View style={[styles.formView, {marginBottom:20}]}>
+          <View style={[styles.formView, { marginBottom: 20 }]}>
             <ButtonComponent
               textoBtn="Irrigar"
-              onPress={handleIrrigar}
+              onPress={openConfirmModal}
               backGroundColor={CORES.primaria}
             />
           </View>
         </>
       ) : (
-        carregando && <Text>Carregando dados de irrigação...</Text>
+        carregando && <Skeleton />
       )}
+
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isConfirmVisible}
+        onRequestClose={closeConfirmModal}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalTitle}>Confirmar Irrigação</Text>
+            <Text>Tem certeza de que deseja realizar a irrigação? Isso irá irrigar a cultura com os dados mostrados.</Text>
+            <View style={styles.modalButtonContainer}>
+              <TouchableOpacity onPress={handleIrrigar} style={styles.confirmButton}>
+                <Text style={styles.buttonText}>Confirmar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={closeConfirmModal} style={styles.cancelButton}>
+                <Text style={styles.buttonText}>Cancelar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };

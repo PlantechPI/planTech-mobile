@@ -102,14 +102,10 @@ const Home = () => {
             <Image source={require('../../../assets/images/iconePlanThec.png')} />
           </View>
         </View>
-        <View style={styles.parteBaixo}>
+        <View style={[styles.parteBaixo]}>
           <ButtonComponent
             textoBtn='Logar'
             onPress={openLoginModal}
-          />
-          <ButtonComponent
-            textoBtn='Cadastrar'
-            onPress={openSignupModal}
           />
           <Modal
             animationType="slide"
@@ -184,10 +180,6 @@ const Home = () => {
                   value={newSenha}
                 />
 
-                <ButtonComponent
-                  textoBtn='Cadastrar'
-                  onPress={cadastrarUsuario}
-                />
               </View>
             </TouchableOpacity>
           </Modal>

@@ -53,6 +53,54 @@ titulo: {
   fontWeight: '900', 
   color: 'white'
 },
+centeredView: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: 'rgba(0, 0, 0, 0.5)', // Cor de fundo semi-transparente
+},
+modalView: {
+  backgroundColor: 'white',
+  borderRadius: 10,
+  padding: 20,
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: 4,
+  elevation: 5,
+  minWidth: 300,
+  maxWidth: 350,
+},
+modalTitle: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  marginBottom: 10,
+  textAlign: 'center',
+  color: CORES.primaria, // Cor do título
+},
+modalButtonContainer: {
+  flexDirection: 'row',
+  justifyContent: 'space-around',
+  marginTop: 20,
+},
+confirmButton: {
+  backgroundColor: CORES.primaria,
+  padding: 10,
+  borderRadius: 5,
+},
+cancelButton: {
+  backgroundColor: CORES.vermelho,
+  padding: 10,
+  borderRadius: 5,
+},
+buttonText: {
+  color: 'white',
+  fontWeight: 'bold',
+  textAlign: 'center',
+},
   });
 
   export default styles

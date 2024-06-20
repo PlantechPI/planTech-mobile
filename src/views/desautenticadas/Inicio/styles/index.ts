@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
       },
       parteBaixo:{
         flex:1,
-        marginBottom:40,
+        marginBottom:80,
         justifyContent:'flex-end',
         width: '80%',
         gap: 10
