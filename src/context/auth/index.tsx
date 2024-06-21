@@ -109,10 +109,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const irrigar = async () => {
     try {
-      const response = await api.post('/irrigar');
+      const response = await api.get('/irrigar');
       return response.data;
     } catch (error) {
-      console.log('erro', error);
       return false;
     }
   };

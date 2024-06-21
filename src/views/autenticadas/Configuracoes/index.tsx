@@ -21,7 +21,6 @@ const Configuracoes = () => {
       const data = await getDadosIrrigacao(new Date().toLocaleDateString('pt-BR'));
       setDadosIrrigacao(data);
       setCarregando(false);
-      console.log(data);
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível obter os dados de irrigação.');
       setCarregando(false);
@@ -65,7 +64,7 @@ const Configuracoes = () => {
             label="Dias Fósforo"
             modal={{
               title: "Dias do Ciclo de Fósforo",
-              text: "Este card representa o número de dias desde o último ciclo de fósforo. O fósforo é essencial para a transferência de energia e fotossíntese das plantas. Manter um nível ótimo de fósforo garante um crescimento robusto e desenvolvimento das plantas."
+              text: "Representa o número de dias até a planta consumir todo o Fósforo atual. O fósforo é essencial para a transferência de energia e fotossíntese das plantas. Manter um nível ótimo de fósforo garante um crescimento robusto e desenvolvimento das plantas. Essa conta é ajustada de acordo com cada cultura e é baseada em artigos da embrapa e do incaper"
             }}
           />
           <CardTotal
@@ -74,7 +73,7 @@ const Configuracoes = () => {
             label="Dias Nitrogênio"
             modal={{
               title: "Dias do Ciclo de Nitrogênio",
-              text: "Este card exibe o número de dias desde o último ciclo de nitrogênio. O nitrogênio é um componente crítico para o crescimento das plantas, pois é uma parte importante da clorofila, o composto que as plantas usam na fotossíntese. Ciclos regulares de nitrogênio ajudam a promover uma folhagem saudável nas plantas."
+              text: "Representa o número de dias até a planta consumir todo o Nitrogênio atual. O nitrogênio é um componente crítico para o crescimento das plantas, pois é uma parte importante da clorofila, o composto que as plantas usam na fotossíntese. Ciclos regulares de nitrogênio ajudam a promover uma folhagem saudável nas plantas. Essa conta é ajustada de acordo com cada cultura e é baseada em artigos da embrapa e do incaper"
             }}
           />
           <CardTotal
@@ -83,34 +82,34 @@ const Configuracoes = () => {
             label="Dias Potássio"
             modal={{
               title: "Dias do Ciclo de Potássio",
-              text: "Este card indica o número de dias desde o último ciclo de potássio. O potássio regula o crescimento das plantas e é crucial para a absorção de água e ativação de enzimas. Garantir ciclos regulares de potássio ajuda as plantas a suportarem o estresse e a melhorar a qualidade da produção."
+              text: "Representa o número de dias até a planta consumir todo o Potássio atual. O potássio regula o crescimento das plantas e é crucial para a absorção de água e ativação de enzimas. Garantir ciclos regulares de potássio ajuda as plantas a suportarem o estresse e a melhorar a qualidade da produção. Essa conta é ajustada de acordo com cada cultura e é baseada em artigos da embrapa e do incaper"
             }}
           />
           <CardTotal
-            informacao={String(dadosIrrigacao.media_umidade)}
+            informacao={String(dadosIrrigacao.media_umidade).concat(' %')}
             icone={{ nomeIcon: 'beer-outline', directory: 'MaterialCommunityIcons' }}
             label="Média Umidade"
             modal={{
               title: "Média da Umidade do Solo",
-              text: "Este card mostra o nível médio de umidade do solo. A umidade adequada do solo é vital para a absorção de nutrientes e a saúde das plantas. Monitorar e manter níveis ótimos de umidade previnem o estresse por seca e garantem um ambiente de crescimento saudável para as plantas."
+              text: "Representa o nível médio de umidade do solo do dia. A umidade adequada do solo é vital para a absorção de nutrientes e a saúde das plantas. Monitorar e manter níveis ótimos de umidade previnem o estresse por seca e garantem um ambiente de crescimento saudável para as plantas."
             }}
           />
           <CardTotal
-            informacao={String(dadosIrrigacao.necessidade_agua)}
+            informacao={String(dadosIrrigacao.necessidade_agua).concat(' mm')}
             icone={{ nomeIcon: 'water-percent', directory: 'MaterialCommunityIcons' }}
             label="Necessidade Água"
             modal={{
               title: "Necessidade de Água",
-              text: "Este card detalha a necessidade atual de água para suas culturas. Compreender as necessidades hídricas ajuda na irrigação eficiente, prevenindo tanto a sub-irrigação quanto a irrigação excessiva, promovendo assim o uso sustentável da água e o crescimento ideal das culturas."
+              text: "Representa a necessidade de água da cultura específica em mm. Compreender as necessidades hídricas ajuda na irrigação eficiente, prevenindo tanto a sub-irrigação quanto a irrigação excessiva, promovendo assim o uso sustentável da água e o crescimento ideal das culturas. Essa conta é ajustada de acordo com cada cultura e é baseada em artigos da embrapa e do incaper"
             }}
           />
           <CardTotal
-            informacao={String(dadosIrrigacao.npk)}
+            informacao={String(dadosIrrigacao.npk).concat(' mm')}
             icone={{ nomeIcon: 'chart-bar', directory: 'MaterialCommunityIcons' }}
             label="Necessidade de NPK"
             modal={{
               title: "Necessidade de NPK",
-              text: "Este card fornece a necessidade atual de NPK (Nitrogênio, Fósforo e Potássio). Níveis equilibrados de NPK são cruciais para a nutrição e o crescimento das plantas. O monitoramento regular garante que suas plantas recebam os nutrientes certos para um desenvolvimento saudável e produtivo."
+              text: "Este card fornece a necessidade atual de NPK (Nitrogênio, Fósforo e Potássio), ele é medido em mm. Níveis equilibrados de NPK são cruciais para a nutrição e o crescimento das plantas. O monitoramento regular garante que suas plantas recebam os nutrientes certos para um desenvolvimento saudável e produtivo. Essa conta é ajustada de acordo com cada cultura e é baseada em artigos da embrapa e do incaper"
             }}
           />
           <View style={[styles.formView, { marginBottom: 20 }]}>
@@ -134,14 +133,15 @@ const Configuracoes = () => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalTitle}>Confirmar Irrigação</Text>
-            <Text>Tem certeza de que deseja realizar a irrigação? Isso irá irrigar a cultura com os dados mostrados.</Text>
+            <Text>Isso irá irrigar a cultura com de acordo com a necessidade de água e npk. Tem certeza de que deseja realizar a irrigação?</Text>
             <View style={styles.modalButtonContainer}>
+            <TouchableOpacity onPress={closeConfirmModal} style={styles.cancelButton}>
+                <Text style={styles.buttonText}>Cancelar</Text>
+              </TouchableOpacity>
               <TouchableOpacity onPress={handleIrrigar} style={styles.confirmButton}>
                 <Text style={styles.buttonText}>Confirmar</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={closeConfirmModal} style={styles.cancelButton}>
-                <Text style={styles.buttonText}>Cancelar</Text>
-              </TouchableOpacity>
+
             </View>
           </View>
         </View>

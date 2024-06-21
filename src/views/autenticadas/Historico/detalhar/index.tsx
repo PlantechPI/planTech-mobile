@@ -30,6 +30,7 @@ const HistoricoDetalhado: React.FC = () => {
     const [mediaUmidadeAr, setMediaUmidadeAr] = useState<number>(0);
     const [mediaUmidadeSolo, setMediaUmidadeSolo] = useState<number>(0);
     const [precipitacaoTotal, setPrecipitacaoTotal] = useState<number>(0);
+    const [mediaTemp, setMediaTemp] = useState(0);
     const [tempMax, setTempMax] = useState<number>(0);
     const [tempMin, setTempMin] = useState<number>(0);
     const [evapo, setEvapo] = useState<number>(0);
@@ -66,6 +67,7 @@ const HistoricoDetalhado: React.FC = () => {
             let totalPrecipitacaoTotal = 0;
             let temperaturaMax = 0;
             let temperaturaMin = 300;
+            let totalTempMedia = 0;
 
             logs.forEach((item: any) => {
                 totalFosforo += item.fosforoSolo;
@@ -75,6 +77,7 @@ const HistoricoDetalhado: React.FC = () => {
                 totalPrecipitacaoTotal += item.precipitacao;
                 totalUmidadeAr += item.umidadeAr;
                 totalUmidadeSolo += item.umidadeSolo;
+                totalTempMedia += item.tempMax;
                 if (item.tempMax > temperaturaMax) {
                     temperaturaMax = item.tempMax;
                 }
@@ -89,6 +92,7 @@ const HistoricoDetalhado: React.FC = () => {
             setMediaTempSolo(Number((totalTempSolo / logs.length).toFixed(2)));
             setMediaUmidadeAr(Number((totalUmidadeAr / logs.length).toFixed(2)));
             setMediaUmidadeSolo(Number((totalUmidadeSolo / logs.length).toFixed(2)));
+            setMediaTemp(Number((totalTempMedia / logs.length).toFixed(2)));
             setPrecipitacaoTotal(Number(totalPrecipitacaoTotal.toFixed(2)));
             setTempMax(Number(temperaturaMax.toFixed(2)));
             setTempMin(Number(temperaturaMin.toFixed(2)));
@@ -104,48 +108,47 @@ const HistoricoDetalhado: React.FC = () => {
         const hour = parseInt(horaDado.split(':')[0], 10);
         if (hour > 18) {
             return 'day-haze';
-            } else if (hour > 12) {
-                return 'day-sunny';
-            } else {
+        } else if (hour > 12) {
+            return 'day-sunny';
+        } else {
             return 'horizon';
         }
-      }; 
+    };
 
-      useEffect(() => {
+    useEffect(() => {
         if (logs.length > 0) {
-          let tempMaxArray: number[] = [];
-          let tempMinArray: number[] = [];
-          let tempMaxFiltered: number[] = [];
-          let tempMinFiltered: number[] = [];
-          let labelsFiltered: string[] = [];
-    
-          // Filtra os dados a cada 2 horas
-          logs.forEach((item: any) => {
-            tempMaxFiltered.push(item.tempMax);
-            tempMinFiltered.push(item.tempMin);
-            labelsFiltered.push(item.horaDado);
-          });
-    
-          setTempMaxData(tempMaxFiltered);
-          setTempMinData(tempMinFiltered);
-    
-          // Ajuste a estrutura do objeto data
-          const data = {
-            labels: labelsFiltered,
-            datasets: [
-              {
-                data: tempMaxFiltered,
-                color: (opacity = 1) => `rgba(255, 0, 0, ${opacity})`, // cor da linha de temperatura máxima
-                strokeWidth: 2,
-              },
-            ],
-            // legend: ['Temp. Máxima', 'Temp. Mínima'], // legenda
-          };
-          
-          // Atualiza o estado dos dados
-        //   setData(data);
+            let tempMaxArray: number[] = [];
+            let tempMinArray: number[] = [];
+            let tempMaxFiltered: number[] = [];
+            let tempMinFiltered: number[] = [];
+            let labelsFiltered: string[] = [];
+
+            // Filtra os dados a cada 2 horas
+            logs.forEach((item: any) => {
+                tempMaxFiltered.push(item.tempMax);
+                tempMinFiltered.push(item.tempMin);
+                labelsFiltered.push(item.horaDado);
+            });
+
+            setTempMaxData(tempMaxFiltered);
+            setTempMinData(tempMinFiltered);
+
+            // Ajuste a estrutura do objeto data
+            const data = {
+                labels: labelsFiltered,
+                datasets: [
+                    {
+                        data: tempMaxFiltered,
+                        color: (opacity = 1) => `rgba(255, 0, 0, ${opacity})`, // cor da linha de temperatura máxima
+                        strokeWidth: 2,
+                    },
+                ],
+            };
+
+            // Atualiza o estado dos dados
+            // setData(data);
         }
-      }, [logs]);
+    }, [logs]);
 
     return (
         existeDado ? (
@@ -158,7 +161,7 @@ const HistoricoDetalhado: React.FC = () => {
                     <View style={styles.cards}>
                         <View style={styles.tituloSecundario}>
                             <View style={{ width: '90%' }}>
-                                <Text style={styles.textTitulo}> MÉDIAS DO DIA </Text>
+                                <Text style={styles.textTitulo}> MÉDIAS DO DIA {data}</Text>
                             </View>
                             <View style={{ width: '10%' }}>
                                 <TouchableOpacity onPress={() => setVisibleDadosGerais((prevState) => (!prevState))}>
@@ -172,8 +175,8 @@ const HistoricoDetalhado: React.FC = () => {
                             <>
                                 <Card
                                     icone={{ nomeIcon: 'thermometer', directory: 'MaterialCommunityIcons' }}
-                                    label={'TEMPERATURA ATUAL'}
-                                    informacao={String(mediaTempSolo).concat( '°C')} // Assumi que currentTemp deveria ser mediaTempSolo
+                                    label={'TEMPERATURA MÉDIA'}
+                                    informacao={String(mediaTemp).concat( '°C')} // Assumi que currentTemp deveria ser mediaTempSolo
                                     modal={{
                                         title: 'Temperatura Atual (°C)',
                                         text: 'A temperatura atual refere-se à leitura da temperatura do ar em um momento específico, no caso medida em graus Celsius (°C). Esta medida é crucial para diversos aspectos da vida cotidiana, incluindo agricultura, saúde, planejamento urbano e atividades ao ar livre. No contexto agrícola, a temperatura atual é um indicador vital que influencia diretamente o crescimento e desenvolvimento das plantas.'
@@ -323,7 +326,7 @@ const HistoricoDetalhado: React.FC = () => {
 
                         <View style={styles.tituloSecundario}>
                             <View style={{ width: '90%' }}>
-                                <Text style={styles.textTitulo}>LOGS DO DIA </Text>
+                                <Text style={styles.textTitulo}>MOMENTOS DE AFERIÇÃO </Text>
                             </View>
                             <View style={{ width: '10%' }}>
                                 <TouchableOpacity onPress={() => setVisibleLogs((prevState) => (!prevState))}>

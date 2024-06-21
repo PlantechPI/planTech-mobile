@@ -71,7 +71,7 @@ const LineChartExemple: React.FC<IGraficoDeLinha> = ({ data }) => {
     <ScrollView>
       <View>
         <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginVertical: 10 }}>
-          Variação das Temperaturas Máximas e Mínimas
+          Variação da temperatura no dia
         </Text>
         <LineChart
                   data={{

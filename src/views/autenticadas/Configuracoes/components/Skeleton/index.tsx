@@ -22,6 +22,8 @@ const Skeleton = () => {
           listraSecundaria 
           widthListraSecundaria={'70%'}
           marginBottonListraSecundaria={20}
+          // paddingVerticalCard={5}
+          qtdRepedicao={2}
         />
       );
     }
@@ -29,12 +31,20 @@ const Skeleton = () => {
   }
 
   return (
-    <View style={styles.card}>
-      <SkeletonSquare height={30} width={'100%'}/>
-      {ExibeCards()}
+    <View style={[styles.card]}>
+      <SkeletonSquare height={60} width={'100%'}/>
+      <View style={{flexDirection:'row', flexWrap:'wrap'}}>
+        {ExibeCards()}
+        {ExibeCards()}
+        {ExibeCards()}
+      </View>
 
       <SkeletonSquare height={30} width={'100%'}/>
-      {ExibeCards()}
+      <View style={{flexDirection:'row', flexWrap:'wrap'}}>
+
+        {ExibeCards()}
+        {ExibeCards()}
+      </View>
 
       <SkeletonSquare height={30} width={'100%'}/>
       {ExibeCards()}
