@@ -12,9 +12,12 @@ type AuthContextType = {
   logout: () => void;
   user: any;
   listarCulturas: () => Promise<any>;
+  retornaIdMiniEstacao: (id_cultura: number) => Promise<any>;
   id_cultura: string;
+  id_miniestacao: number;
+  setIdMiniestacao: React.Dispatch<React.SetStateAction<number>>;
   setIdCultura: React.Dispatch<React.SetStateAction<string>>;
-  listarInformacoesDiarias: (dataString: string) => Promise<any>;
+  listarInformacoesDiarias: (id_miniestacao: number) => Promise<any>;
   evapoDoDia: (dataString: string) => Promise<any>;
   getDadosIrrigacao: (dataString: string) => Promise<any>;
   irrigar: () => Promise<any>;
@@ -27,9 +30,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [id_Usuario, setIdUsuario] = useState<string>('');
   const [user, setUser] = useState<any>({});
   const [id_cultura, setIdCultura] = useState('');
+  const [id_miniestacao, setIdMiniestacao] = useState(0);
   const [idCoordenada, setIdCoordenada] = useState(1);
 
-  const api = axios.create({ baseURL: 'https://api.plantechbr.com' });
+  const api = axios.create({ baseURL: 'http://10.0.2.2:5000' });
 
   const cadastrar = async (nome: string, email: string, senha: string) => {
     try {
@@ -43,11 +47,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
-  const login = async (email: string, senha: string): Promise<boolean> => {
+  /**
+  const login = async (): Promise<boolean> => {
     try {
-      const payload = { emailUser: email, passUser: senha, typeUser: FuncaoNoSistema.agricultor };
-      const response = await api.post('/login', payload);
-      setIdUsuario(String(response.data.idUsuario));
       setAuth(true);
       return true;
     } catch (error) {
@@ -55,19 +57,57 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return false;
     }
   };
+  */
 
-  const listarCulturas = async () => {
+  const login = async (email: string, senha: string): Promise<boolean> => {
     try {
-      const payload = { user_id: id_Usuario };
-      const response = await api.get('/listCulturas', { params: payload });
+      const payload = {
+        emailUsuario: email,
+        senhaUsuario: senha,
+      };
+
+      const response = await api.post('/login', payload);
+
+      const usuarioData = response.data.usuario;
+
+      console.log('Login bem-sucedido:', usuarioData);
+
+      // Salva o ID corretamente
+      setIdUsuario(String(usuarioData.idUsuario));
       setAuth(true);
-      return response.data;
-    } catch (error) {
-      console.log('erro', error);
+
+      return true;
+    } catch (error: any) {
+      console.error('Erro no login:', error.response?.data || error.message);
       return false;
     }
   };
 
+  const listarCulturas = async () => {
+    try {
+      console.log('ID do usuário para listar culturas:', id_Usuario);
+      if (!id_Usuario) {
+        console.log('ID do usuário não informado');
+        return false;
+      }
+
+      const response = await api.get(`/usuarios/${id_Usuario}/culturas`);
+
+      if (response.status === 200) {
+        setAuth(true);
+        console.log(response.data);
+        return response.data;
+      } else {
+        console.log('Erro ao listar culturas:', response.status);
+        return false;
+      }
+    } catch (error) {
+      console.log('Erro ao listar culturas:', error);
+      return false;
+    }
+  };
+
+  /*
   const listarInformacoesDiarias = async (dataString: string) => {
     try {
       const [dia, mes, ano] = dataString.split('/');
@@ -80,6 +120,31 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return false;
     }
   };
+ */
+
+  const retornaIdMiniEstacao = async (id_cultura: number) => {
+    try {
+      const url = `/associacoes/cultura/${id_cultura}`
+      const response = await api.get(url);
+      return response.data[0].Fk_Miniestacao_idMiniestacao;
+    } catch (error) {
+      console.log('erro', error);
+    }
+  };
+
+
+  const listarInformacoesDiarias = async (id_miniestacao: number) => {
+    try{
+      const url = `/dados/${id_miniestacao}/ultimo`
+      const response = await api.get(url);
+      console.log("Informações Diarias", response.data)
+      return response.data
+
+    }catch (error){
+      console.log("Erro ao listar informações diárias:", error)
+    }
+  }
+
 
   const evapoDoDia = async (dataString: string) => {
     try {
@@ -126,7 +191,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     <AuthContext.Provider value={{
       auth, setAuth, id_Usuario, setIdUsuario, cadastrar, login, logout,
       user, listarCulturas, id_cultura, setIdCultura, listarInformacoesDiarias,
-      evapoDoDia, getDadosIrrigacao, irrigar
+      evapoDoDia, getDadosIrrigacao, irrigar, id_miniestacao, setIdMiniestacao, retornaIdMiniEstacao
     }}>
       {children}
     </AuthContext.Provider>

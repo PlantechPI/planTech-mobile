@@ -13,7 +13,7 @@ import Popup from '../../../components/PopUp';
 import LineChartExemple from './components/GraficoLinha';
 
 const StatusCultura = () => {
-  const { listarInformacoesDiarias, evapoDoDia } = useContext(AuthContext);
+  const { id_miniestacao, listarInformacoesDiarias, evapoDoDia } = useContext(AuthContext);
   const [ dataAtual, setDataAtual] = useState<string>('');
   const [ dadosAtuais, setDadosAtuais] = useState<any[]>([]);
 
@@ -48,7 +48,7 @@ const StatusCultura = () => {
     setCarregando(true)
     const currentData = getCurrentDate();
     setDataAtual(currentData);
-    const res = await listarInformacoesDiarias(currentData);
+    const res = await listarInformacoesDiarias(id_miniestacao);
     const evapoDodia = await evapoDoDia(currentData);
     setCurrentEvapo(evapoDodia.ETO);
     setDadosAtuais(res);

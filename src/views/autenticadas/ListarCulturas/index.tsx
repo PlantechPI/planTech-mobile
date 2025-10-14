@@ -8,17 +8,15 @@ import { FuncaoNoSistema } from '../../../enum/FuncaoNoSistema'
 import CardCultura from './components/CardCultura'
 import { CORES } from '../../../enum/Cores'
 import { AuthContext } from '../../../context/auth'
-
-
-
-
+ 
 
 const ListarCulturas = () => {
-  const { id_cultura, setIdCultura, listarCulturas } = useContext(AuthContext);
+  const { setIdMiniestacao, id_cultura, setIdCultura, listarCulturas, retornaIdMiniEstacao } = useContext(AuthContext);
 
   const navigation = useNavigation();
   const [culturas, setCulturas] = useState([]);
 
+  
   useEffect(() => {
     const retornaCulturas = async () => {
       const listaCulturas = await listarCulturas();
@@ -26,6 +24,7 @@ const ListarCulturas = () => {
     };
     retornaCulturas();
   }, []);
+
 
 
     return (
