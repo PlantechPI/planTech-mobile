@@ -1,21 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import { useRoute } from '@react-navigation/native';
 import AuthContext from '../../../context/auth';
 import { Octicons } from '@expo/vector-icons';
 import Card from './components/Card';
 import { CORES } from '../../../enum/Cores';
 import BarChartExample from './components/Grafico';
 import { Skeleton } from './components/Skeleton';
-import Popup from '../../../components/PopUp';
 import LineChartExemple from './components/GraficoLinha';
 
 const StatusCultura = () => {
-  const { id_miniestacao, listarInformacoesDiarias, evapoDoDia } = useContext(AuthContext);
+  const { id_miniestacao, listarInformacoesDiarias } = useContext(AuthContext);
   const [ dataAtual, setDataAtual] = useState<string>('');
-  const [ dadosAtuais, setDadosAtuais] = useState<any[]>([]);
+  const [ dadosAtuais, setDadosAtuais] = useState<any>({});
 
   const [ carregando, setCarregando] = useState(true)
   
@@ -44,50 +41,68 @@ const StatusCultura = () => {
     return (`${day}/${month}/${year}`);
   };
 
-  const recuperarDados = async() =>{
-    setCarregando(true)
-    const currentData = getCurrentDate();
-    setDataAtual(currentData);
-    const res = await listarInformacoesDiarias(id_miniestacao);
-    const evapoDodia = await evapoDoDia(currentData);
-    setCurrentEvapo(evapoDodia.ETO);
-    setDadosAtuais(res);
-  }
+  const recuperarDados = async () => {
+    try {
+      setCarregando(true);
+      console.log("⏳ Recuperando dados...");
+
+      const currentData = getCurrentDate();
+      setDataAtual(currentData);
+
+      const res = await listarInformacoesDiarias(id_miniestacao);
+      console.log("📦 Dados recebidos:", res);
+
+      if (res?.dados) {
+        if (res.dados["Evapotranspiração"]) {
+          setCurrentEvapo(res.dados["Evapotranspiração"].valorAbsoluto || 0);
+        }
+
+        // Atualiza os demais dados conforme necessário
+        setDadosAtuais(res);
+      } else {
+        console.warn("⚠️ Nenhum dado encontrado para esta miniestação");
+      }
+
+    } catch (error) {
+      console.error("💥 Erro ao recuperar dados:", error);
+    } finally {
+      setCarregando(false);
+      console.log("✅ Recuperação finalizada");
+    }
+  };
 
   useEffect(() =>{
     recuperarDados();
   }, []);
 
-  useEffect(() =>{
-    if(dadosAtuais.length > 0){
-        let totalPrecipitacaoTotal = 0;
-        let temperaturaMax = 0;
-        let temperaturaMin = 300;
-        dadosAtuais.map((item)=>{
-            totalPrecipitacaoTotal += item.precipitacao;
-            if(item.tempMax > temperaturaMax){
-                temperaturaMax = item.tempMax;
-            }
-            if(item.tempMin < temperaturaMin){
-                temperaturaMin = item.tempMin;
-            }
-        });
-        const dadosMaisRecentes = dadosAtuais[(dadosAtuais.length-1)];
+  useEffect(() => {
+    if (dadosAtuais && dadosAtuais.dados) {
+      const sensores = dadosAtuais.dados;
 
-        setCurrentFosforo(Number((dadosMaisRecentes.fosforoSolo).toFixed(2)));
-        setCurrentNitrogenio(Number((dadosMaisRecentes.nitrogenioSolo).toFixed(2)));
-        setCurrentPotassio(Number((dadosMaisRecentes.potassioSolo).toFixed(2)));
-        setCurrentTempSolo(Number((dadosMaisRecentes.tempSolo).toFixed(2)));
-        setCurrentUmidadeAr(Number((dadosMaisRecentes.umidadeAr).toFixed(2)));
-        setCurrentUmidadeSolo(Number((dadosMaisRecentes.umidadeSolo).toFixed(2)));
-        setCurrentTemp(Number(((dadosMaisRecentes.tempMax + dadosMaisRecentes.tempMin)/2).toFixed(2)));
-        setPrecipitacaoTotal(totalPrecipitacaoTotal);
-        setTempMax(temperaturaMax);
-        setTempMin(temperaturaMin);
-        setUltimaAtualizacao(dadosMaisRecentes.horaDado);
-        setCarregando(false)
+      // Extraindo os valores diretamente do objeto retornado pela API
+      setCurrentTempSolo(Number(sensores["Temperatura do Solo"]?.valorMed || 0));
+      setCurrentUmidadeSolo(Number(sensores["Umidade do Solo"]?.valorMed || 0));
+      setCurrentTemp(Number(sensores["Temperatura do Ar"]?.valorMed || 0));
+      setTempMax(Number(sensores["Temperatura do Ar"]?.valorMax || 0));
+      setTempMin(Number(sensores["Temperatura do Ar"]?.valorMin || 0));
+      setCurrentUmidadeAr(Number(sensores["Umidade do Ar"]?.valorMed || 0));
+      setPrecipitacaoTotal(Number(sensores["Precipitação"]?.valorAbsoluto || 0));
+      setCurrentEvapo(Number(sensores["Evapotranspiração"]?.valorAbsoluto || 0));
+      setCurrentFosforo(Number(sensores["Fósforo do Solo"]?.valorAbsoluto || 0));
+      setCurrentNitrogenio(Number(sensores["Nitrogênio do Solo"]?.valorAbsoluto || 0));
+      setCurrentPotassio(Number(sensores["Potássio do Solo"]?.valorAbsoluto || 0));
+
+      // Converter o timestamp para um formato legível
+      if (dadosAtuais.timestampColeta) {
+        const data = new Date(dadosAtuais.timestampColeta);
+        const hora = data.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+        setUltimaAtualizacao(hora);
+      }
+
+      setCarregando(false);
     }
   }, [dadosAtuais]);
+
 
   return (
     <>

@@ -12,7 +12,7 @@ import  CardTelaToda from './components/CardTelaToda'
 import GraficoDeLinha from './components/GraficoLinha'
 
 const HistoricoDetalhado: React.FC = () => {
-    const { listarInformacoesDiarias, evapoDoDia } = useContext(AuthContext);
+    const { listarInformacoesDiarias } = useContext(AuthContext);
     const route = useRoute();
     const navigation = useNavigation();
 
@@ -42,8 +42,6 @@ const HistoricoDetalhado: React.FC = () => {
 
     const recuperarInfos = async () => {
         const res = await listarInformacoesDiarias(data);
-        const evapoDodia = await evapoDoDia(data);
-        setEvapo(evapoDodia.ETO);
         if (res.length !== 0) {
             setLogs(res);
             setLoading(false);

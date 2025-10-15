@@ -18,7 +18,6 @@ type AuthContextType = {
   setIdMiniestacao: React.Dispatch<React.SetStateAction<number>>;
   setIdCultura: React.Dispatch<React.SetStateAction<string>>;
   listarInformacoesDiarias: (id_miniestacao: number) => Promise<any>;
-  evapoDoDia: (dataString: string) => Promise<any>;
   getDadosIrrigacao: (dataString: string) => Promise<any>;
   irrigar: () => Promise<any>;
 };
@@ -138,26 +137,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const url = `/dados/${id_miniestacao}/ultimo`
       const response = await api.get(url);
       console.log("Informações Diarias", response.data)
-      return response.data
+      return response.data;
 
     }catch (error){
       console.log("Erro ao listar informações diárias:", error)
+      return null;
     }
   }
-
-
-  const evapoDoDia = async (dataString: string) => {
-    try {
-      const [dia, mes, ano] = dataString.split('/');
-      const data_atual = `${ano}-${mes}-${dia}`;
-      const url = `/evapo/${data_atual}/${id_cultura}`;
-      const response = await api.get(url);
-      return response.data;
-    } catch (error) {
-      console.log('erro', error);
-      return false;
-    }
-  };
 
   const getDadosIrrigacao = async (dataString: string) => {
     try {
@@ -191,7 +177,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     <AuthContext.Provider value={{
       auth, setAuth, id_Usuario, setIdUsuario, cadastrar, login, logout,
       user, listarCulturas, id_cultura, setIdCultura, listarInformacoesDiarias,
-      evapoDoDia, getDadosIrrigacao, irrigar, id_miniestacao, setIdMiniestacao, retornaIdMiniEstacao
+      getDadosIrrigacao, irrigar, id_miniestacao, setIdMiniestacao, retornaIdMiniEstacao
     }}>
       {children}
     </AuthContext.Provider>
