@@ -10,7 +10,7 @@ import CardHistorico from './components/CardHistorico/index'
 const Historico:React.FC = () => {
   const { listarInformacoesDiarias } = useContext(AuthContext)
   
-  // listarInformacoesDiarias()
+  // listarInformacoesDiarias() 
   const [listaDeDatas, setListaDeDatas] = useState<string[]>([])
 
   const getCurrentDate = () => {

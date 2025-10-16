@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from './styles/style';
 import { FontAwesome5, Entypo, Fontisto } from '@expo/vector-icons';
@@ -13,6 +13,7 @@ interface ICardCadastrar {
 }
 
 const CardCadastrar: React.FC<ICardCadastrar> = ({ nomeCultura, nomeTipoCultura, local, id_cultura_atual }) => {
+  const [time, setTime] = useState(false);
   const navigation = useNavigation<any>();
   const { setIdMiniestacao, id_cultura, retornaIdMiniEstacao, setIdCultura } = useContext(AuthContext);
 
@@ -22,14 +23,23 @@ const CardCadastrar: React.FC<ICardCadastrar> = ({ nomeCultura, nomeTipoCultura,
   };
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setTime(true); 
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     const retornaEstacao = async () => {
+      console.log("ID cultura atual no card:" + id_cultura_atual)
       const id_ministacao = await retornaIdMiniEstacao(Number(id_cultura_atual));
       console.log("ID ministaçao enviado para o context:" + id_ministacao)
       setIdMiniestacao(id_ministacao);
     };
     retornaEstacao();
     
-  }, [id_cultura]);
+  }, []);
 
   return (
     <TouchableOpacity style={styles.container} onPress={mudaIdCultura}>

@@ -18,6 +18,8 @@ type AuthContextType = {
   setIdMiniestacao: React.Dispatch<React.SetStateAction<number>>;
   setIdCultura: React.Dispatch<React.SetStateAction<string>>;
   listarInformacoesDiarias: (id_miniestacao: number) => Promise<any>;
+  listarInformacoesDiariasData: (id_miniestacao: number, dataString: string) => Promise<any>;
+  listarTodasInformacoesDiariasData: (id_miniestacao: number, dataString: string) => Promise<any>;
   getDadosIrrigacao: (dataString: string) => Promise<any>;
   irrigar: () => Promise<any>;
 };
@@ -145,6 +147,43 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }
 
+  const listarInformacoesDiariasData = async (id_miniestacao: number, data: string) => {
+    try {
+      const url = `/boletim/${id_miniestacao}/${data}`
+      const response = await api.get(url);
+      console.log(`Informações do dia ${data}`, response.data)
+      return response.data;
+    } catch (error) {
+      console.log(`Erro ao listar Informações do dia ${data}`, error)
+      return null;
+    }
+  }
+
+  const listarTodasInformacoesDiariasData = async (id_miniestacao: number, data: string) => {
+    try {
+      const url = `/dados/${id_miniestacao}/${data}`
+      const response = await api.get(url);
+      console.log(`Todas Informações do dia ${data}`, response)
+      return response.data;
+    } catch (error) {
+      console.log(`Erro ao listar todas Informações do dia ${data}`, error)
+      return null;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const getDadosIrrigacao = async (dataString: string) => {
     try {
       const [dia, mes, ano] = dataString.split('/');
@@ -177,7 +216,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     <AuthContext.Provider value={{
       auth, setAuth, id_Usuario, setIdUsuario, cadastrar, login, logout,
       user, listarCulturas, id_cultura, setIdCultura, listarInformacoesDiarias,
-      getDadosIrrigacao, irrigar, id_miniestacao, setIdMiniestacao, retornaIdMiniEstacao
+      getDadosIrrigacao, irrigar, id_miniestacao, setIdMiniestacao, retornaIdMiniEstacao, listarInformacoesDiariasData, listarTodasInformacoesDiariasData
     }}>
       {children}
     </AuthContext.Provider>
