@@ -18,7 +18,7 @@ interface ICardStatusCultura {
     text?: string,
 
   }
-}
+} 
 
 const StatusCultura: React.FC<ICardStatusCultura> = ({ informacao, icone, label, modal }) => {
   const [isVisible, setIsVisible] = useState(false);

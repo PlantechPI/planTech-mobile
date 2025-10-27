@@ -19,7 +19,7 @@ const HistoricoDetalhado: React.FC = () => {
   const data = route.params?.data;
 
   const [boletim, setBoletim] = useState<any>(null);
-  const [dadosBrutos, setDadosBrutos] = useState<any[]>([]);
+  const [dadosBrutos, setDadosBrutos] = useState<{ [hora: string]: any }>({});
   const [loading, setLoading] = useState(true);
   const [existeDado, setExisteDado] = useState(true);
 
@@ -48,8 +48,8 @@ const HistoricoDetalhado: React.FC = () => {
         setExisteDado(false);
       }
 
-      if (dadosRes && dadosRes.length > 0) {
-        setDadosBrutos(dadosRes);
+      if (dadosRes && Object.keys(dadosRes).length > 0) {
+        setDadosBrutos(dadosRes); 
       }
     } catch (error) {
       console.error('Erro ao buscar dados do dia:', error);
@@ -58,10 +58,18 @@ const HistoricoDetalhado: React.FC = () => {
       setLoading(false);
       }
       
-    
-      
-
   };
+
+  const getIconName = (horaDado: string) => {
+        const hour = parseInt(horaDado.split(':')[0], 10);
+        if (hour > 18) {
+            return 'day-haze';
+        } else if (hour > 12) {
+            return 'day-sunny';
+        } else {
+            return 'horizon';
+        }
+    };
 
   useEffect(() => {
     recuperarInfos();
@@ -200,15 +208,17 @@ const HistoricoDetalhado: React.FC = () => {
                     strokeWidth: 2,
                   },
                 ],
-              }}
+              }} 
             />
           </View>
         )}
 
-        {/* === LOGS (dados brutos dos sensores) === */}
+        
+
+        {/* === MOMENTOS DE AFERIÇÃO === */}
         <View style={styles.tituloSecundario}>
           <View style={{ width: '90%' }}>
-            <Text style={styles.textTitulo}> DADOS BRUTOS DOS SENSORES </Text>
+            <Text style={styles.textTitulo}> MOMENTOS DE AFERIÇÃO </Text>
           </View>
           <View style={{ width: '10%' }}>
             <TouchableOpacity onPress={() => setVisibilidadeLogs((prev) => !prev)}>
@@ -225,23 +235,26 @@ const HistoricoDetalhado: React.FC = () => {
 
         {visibilidadeLogs && (
           <View style={styles.centro}>
-            {dadosBrutos.map((item, index) => (
+            {Object.entries(dadosBrutos).map(([hora, sensores]: [string, any], index) => (
               <CardTelaToda
                 key={index}
                 icone={{
-                  nomeIcon: 'database',
-                  directory: 'MaterialCommunityIcons',
+                  nomeIcon: getIconName(hora),
+                  directory: 'Fontisto',
                   color: CORES.verdeClaro,
+                }} 
+                label={`HORÁRIO: ${hora}`}
+                informacao={'Toque para ver detalhes'}
+                data={{
+                  horaDado: hora,
+                  ...sensores, // envia todos os sensores (agua, ar, solo)
                 }}
-                label={item.nomeSensor}
-                informacao={`Média: ${item.valorMed ?? '--'} | Máx: ${item.valorMax ?? '--'} | Mín: ${item.valorMin ?? '--'}`}
-                data={item}
               />
             ))}
           </View>
         )}
-      </View>
-    </ScrollView>
+        </View>
+      </ScrollView>
   );
 };
 

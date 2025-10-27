@@ -9,13 +9,31 @@ interface ICardCadastrar {
   nomeCultura?: string;
   nomeTipoCultura?: string;
   local?: string;
-  id_cultura_atual: string;
+  id_cultura_atual: string; 
+  dataPlantio: string
 }
 
-const CardCadastrar: React.FC<ICardCadastrar> = ({ nomeCultura, nomeTipoCultura, local, id_cultura_atual }) => {
+const formatarDataBrasileira = (dataISO: string) => {
+  if (!dataISO) return "";
+
+  try {
+    const data = new Date(dataISO);
+    const dia = String(data.getDate()).padStart(2, "0");
+    const mes = String(data.getMonth() + 1).padStart(2, "0");
+    const ano = data.getFullYear();
+    return `${dia}/${mes}/${ano}`;
+  } catch (error) {
+    console.error("Erro ao formatar data:", error);
+    return dataISO;
+  }
+};
+
+const CardCadastrar: React.FC<ICardCadastrar> = ({ nomeCultura, nomeTipoCultura, local, id_cultura_atual, dataPlantio }) => {
   const [time, setTime] = useState(false);
   const navigation = useNavigation<any>();
   const { setIdMiniestacao, id_cultura, retornaIdMiniEstacao, setIdCultura } = useContext(AuthContext);
+
+  
 
   const mudaIdCultura = () => {
     setIdCultura(id_cultura_atual);
@@ -60,7 +78,7 @@ const CardCadastrar: React.FC<ICardCadastrar> = ({ nomeCultura, nomeTipoCultura,
 
         <View style={styles.boxText}>
           <Fontisto name="date" size={26} style={styles.icon} />
-          <Text style={styles.text}>22/05/2024</Text>
+          <Text style={styles.text}>{formatarDataBrasileira(dataPlantio)}</Text>
         </View>
       </View>
     </TouchableOpacity>

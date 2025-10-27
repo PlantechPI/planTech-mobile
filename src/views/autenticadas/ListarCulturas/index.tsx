@@ -38,10 +38,11 @@ const ListarCulturas = () => {
         <View style={styles.contentContainer}>
             {culturas.map((element: any, index: number) => (
                 <CardCultura
-                key={index} // Adicione uma chave única para cada componente na iteração
+                key={index} 
                 nomeCultura={`CULTURA ${index+1}`}
                 nomeTipoCultura={element.nomeCultura}
-                local='Vitória, Espírito Santo'
+                local='Vila Velha, Espírito Santo'
+                dataPlantio = {element.dataPlantio}
                 id_cultura_atual={element.idCultura}
                 />
                 ))}

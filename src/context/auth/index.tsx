@@ -20,8 +20,9 @@ type AuthContextType = {
   listarInformacoesDiarias: (id_miniestacao: number) => Promise<any>;
   listarInformacoesDiariasData: (id_miniestacao: number, dataString: string) => Promise<any>;
   listarTodasInformacoesDiariasData: (id_miniestacao: number, dataString: string) => Promise<any>;
-  getDadosIrrigacao: (dataString: string) => Promise<any>;
-  irrigar: () => Promise<any>;
+  getDadosIrrigacao: (id_miniestacao: number) => Promise<any>;
+  irrigar: (id_miniestacao: number) => Promise<any>;
+  loadingIrrigacao: boolean;
 };
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -33,8 +34,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [id_cultura, setIdCultura] = useState('');
   const [id_miniestacao, setIdMiniestacao] = useState(0);
   const [idCoordenada, setIdCoordenada] = useState(1);
+  const [loadingIrrigacao, setLoadingIrrigacao] = useState<boolean>(false);
 
-  const api = axios.create({ baseURL: 'http://10.0.2.2:5000' });
+
+
+  const api = axios.create({ 
+    baseURL: 'http://10.0.2.2:5000', 
+    timeout: 60000,
+    maxContentLength: Infinity,
+    maxBodyLength: Infinity
+  });
 
   const cadastrar = async (nome: string, email: string, senha: string) => {
     try {
@@ -96,7 +105,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       if (response.status === 200) {
         setAuth(true);
-        console.log(response.data);
+        console.log(response);
         return response.data;
       } else {
         console.log('Erro ao listar culturas:', response.status);
@@ -158,53 +167,76 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return null;
     }
   }
-
   const listarTodasInformacoesDiariasData = async (id_miniestacao: number, data: string) => {
     try {
-      const url = `/dados/${id_miniestacao}/${data}`
-      const response = await api.get(url);
-      console.log(`Todas Informações do dia ${data}`, response)
+      const url = `/dados/${id_miniestacao}/${data}`;
+      console.log("📡 Chamando:", url);
+      const response = await api.get(url, { timeout: 60000 });
+      console.log("✅ Resposta:", response.data);
       return response.data;
-    } catch (error) {
-      console.log(`Erro ao listar todas Informações do dia ${data}`, error)
+    } catch (error: unknown) {
+      console.error("❌ Erro detalhado:", JSON.stringify(error, null, 2));
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          console.error("Erro no servidor:", error.response.status, error.response.data);
+        } else if (error.request) {
+          console.error("Sem resposta do servidor:", error.request);
+        } else {
+          console.error("Erro na configuração:", error.message);
+        }
+      } else if (error instanceof Error) {
+        console.error("Erro não relacionado ao Axios:", error.message);
+      } else {
+        console.error("Erro desconhecido:", error);
+      }
       return null;
     }
+  };
+
+  /*
+  const listarTodasInformacoesDiariasData = async (id_miniestacao: number, data: string) => {
+  try {
+    const url = `http://192.168.0.11:5000/dados/${id_miniestacao}/${data}`;
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Erro na requisição');
+    const jsonData = await response.json();
+    console.log("✅ Dados:", jsonData);
+    return jsonData;
+  } catch (error) {
+    console.error("❌ Erro:", error);
+    return null;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  const getDadosIrrigacao = async (dataString: string) => {
+};
+*/
+  
+  const getDadosIrrigacao = async (id_miniestacao: number) => {
     try {
-      const [dia, mes, ano] = dataString.split('/');
-      const data_atual = `${ano}-${mes}-${dia}`;
-      const url = `/irrigacao/${data_atual}`;
+      const url = `/recomendacao/${id_miniestacao}`;
       const response = await api.get(url);
       return response.data;
     } catch (error) {
-      console.log('erro', error);
+      console.log('Erro ao obter dados da irrigação: ', error);
       return false;
     }
   };
 
-  const irrigar = async () => {
-    try {
-      const response = await api.get('/irrigar');
-      return response.data;
-    } catch (error) {
-      return false;
-    }
-  };
+  const irrigar = async (id_miniestacao: number) => {
+  try {
+    setLoadingIrrigacao(true);
+    const response = await api.post(`/acionar/${id_miniestacao}`);
+    console.log('✅ Irrigação realizada com sucesso:', response.data);
+    return response.data;
+  } catch (error) {
+    console.log('❌ Erro ao efetuar irrigação:', error);
+    return false;
+  } finally {
+    setLoadingIrrigacao(false); 
+  }
+};
+
+
+
+
 
   const logout = async () => {
     setAuth(false);
@@ -216,7 +248,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     <AuthContext.Provider value={{
       auth, setAuth, id_Usuario, setIdUsuario, cadastrar, login, logout,
       user, listarCulturas, id_cultura, setIdCultura, listarInformacoesDiarias,
-      getDadosIrrigacao, irrigar, id_miniestacao, setIdMiniestacao, retornaIdMiniEstacao, listarInformacoesDiariasData, listarTodasInformacoesDiariasData
+      getDadosIrrigacao, irrigar, id_miniestacao, setIdMiniestacao, retornaIdMiniEstacao, listarInformacoesDiariasData, listarTodasInformacoesDiariasData, loadingIrrigacao
     }}>
       {children}
     </AuthContext.Provider>
